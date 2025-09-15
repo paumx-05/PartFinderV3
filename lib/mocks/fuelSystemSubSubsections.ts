@@ -1,7 +1,7 @@
 // lib/mocks/fuelSystemSubSubsections.ts
-import { SubSubsection } from '@/lib/types/parts';
+import { SubSubCategory } from '@/lib/types/parts';
 
-export const fuelSystemSubSubsections: SubSubsection[] = [
+export const fuelSystemSubSubsections: SubSubCategory[] = [
   {
     id: 'fuel-filter',
     name: 'Filtro de Combustible',

@@ -51,38 +51,48 @@ export default function WipersSubSubsections({
     return matchesSearch && matchesType && matchesBrand;
   }) || [];
 
-  const breadcrumbs = [
-    { label: 'Mantenimientos básicos', onClick: onBackToSubcategory },
-    { label: 'Limpia Parabrisas' },
-    { label: currentSubSubcategory?.name || '' }
-  ];
+  if (!currentSubSubcategory) {
+    return (
+      <div className="bg-gray-800 bg-opacity-70 rounded-lg p-6 text-center">
+        <p className="text-gray-400">No se encontró la subcategoría seleccionada.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
       {/* Header */}
       <SubSubsectionHeader 
-        title={currentSubSubcategory?.name || ''}
-        description={currentSubSubcategory?.description || ''}
-        icon={currentSubSubcategory?.icon || 'Wind'}
-        breadcrumbs={breadcrumbs}
+        categoryName="Mantenimientos básicos"
+        subcategoryName="Limpia Parabrisas"
+        subsubcategory={currentSubSubcategory}
+        onBackToSubcategory={onBackToSubcategory}
       />
 
       {/* Navigation */}
       <SubSubCategoriesNavigation
-        subSubcategories={wipersSubSubsections}
+        subsubcategories={wipersSubSubsections}
         activeSubSubcategory={activeSubSubcategory}
         onSubSubcategoryChange={setActiveSubSubcategory}
-        vehicleData={vehicleData}
       />
 
       {/* Toolbar */}
       <PartsToolbar
+        category={{
+          id: 'wipers',
+          name: 'Limpia Parabrisas',
+          description: 'Sistema de limpiaparabrisas',
+          icon: 'Wind',
+          parts: [],
+          subcategories: []
+        }}
         searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
+        onSearchQueryChange={setSearchQuery}
         viewMode={viewMode}
         onViewModeChange={setViewMode}
-        resultsCount={filteredParts.length}
+        partsCount={filteredParts.length}
         cartItemsCount={cartItemsCount}
+        vehicleData={vehicleData}
       />
 
       {/* Filters */}

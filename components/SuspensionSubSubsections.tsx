@@ -52,38 +52,48 @@ export default function SuspensionSubSubsections({
     return matchesSearch && matchesType && matchesMaterial;
   }) || [];
 
-  const breadcrumbs = [
-    { label: 'Mantenimientos básicos', onClick: onBackToSubcategory },
-    { label: 'Dirección' },
-    { label: currentSubSubcategory?.name || '' }
-  ];
+  if (!currentSubSubcategory) {
+    return (
+      <div className="bg-gray-800 bg-opacity-70 rounded-lg p-6 text-center">
+        <p className="text-gray-400">No se encontró la subcategoría seleccionada.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
       {/* Header */}
       <SubSubsectionHeader 
-        title={currentSubSubcategory?.name || ''}
-        description={currentSubSubcategory?.description || ''}
-        icon={currentSubSubcategory?.icon || 'Car'}
-        breadcrumbs={breadcrumbs}
+        categoryName="Mantenimientos básicos"
+        subcategoryName="Dirección"
+        subsubcategory={currentSubSubcategory}
+        onBackToSubcategory={onBackToSubcategory}
       />
 
       {/* Navigation */}
       <SubSubCategoriesNavigation
-        subSubcategories={suspensionSubSubsections}
+        subsubcategories={suspensionSubSubsections}
         activeSubSubcategory={activeSubSubcategory}
         onSubSubcategoryChange={setActiveSubSubcategory}
-        vehicleData={vehicleData}
       />
 
       {/* Toolbar */}
       <PartsToolbar
+        category={{
+          id: 'suspension',
+          name: 'Dirección',
+          description: 'Sistema de dirección',
+          icon: 'Car',
+          parts: [],
+          subcategories: []
+        }}
         searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
+        onSearchQueryChange={setSearchQuery}
         viewMode={viewMode}
         onViewModeChange={setViewMode}
-        resultsCount={filteredParts.length}
+        partsCount={filteredParts.length}
         cartItemsCount={cartItemsCount}
+        vehicleData={vehicleData}
       />
 
       {/* Filters */}

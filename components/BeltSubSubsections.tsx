@@ -51,38 +51,48 @@ export default function BeltSubSubsections({
     return matchesSearch && matchesType && matchesBrand;
   }) || [];
 
-  const breadcrumbs = [
-    { label: 'Mantenimientos básicos', onClick: onBackToSubcategory },
-    { label: 'Correa Poli V' },
-    { label: currentSubSubcategory?.name || '' }
-  ];
+  if (!currentSubSubcategory) {
+    return (
+      <div className="bg-gray-800 bg-opacity-70 rounded-lg p-6 text-center">
+        <p className="text-gray-400">No se encontró la subcategoría seleccionada.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
       {/* Header */}
       <SubSubsectionHeader 
-        title={currentSubSubcategory?.name || ''}
-        description={currentSubSubcategory?.description || ''}
-        icon={currentSubSubcategory?.icon || 'Zap'}
-        breadcrumbs={breadcrumbs}
+        categoryName="Mantenimientos básicos"
+        subcategoryName="Correa Poli V"
+        subsubcategory={currentSubSubcategory}
+        onBackToSubcategory={onBackToSubcategory}
       />
 
       {/* Navigation */}
       <SubSubCategoriesNavigation
-        subSubcategories={beltSubSubsections}
+        subsubcategories={beltSubSubsections}
         activeSubSubcategory={activeSubSubcategory}
         onSubSubcategoryChange={setActiveSubSubcategory}
-        vehicleData={vehicleData}
       />
 
       {/* Toolbar */}
       <PartsToolbar
+        category={{
+          id: 'belts',
+          name: 'Correa Poli V',
+          description: 'Correas de transmisión',
+          icon: 'Zap',
+          parts: [],
+          subcategories: []
+        }}
         searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
+        onSearchQueryChange={setSearchQuery}
         viewMode={viewMode}
         onViewModeChange={setViewMode}
-        resultsCount={filteredParts.length}
+        partsCount={filteredParts.length}
         cartItemsCount={cartItemsCount}
+        vehicleData={vehicleData}
       />
 
       {/* Filters */}

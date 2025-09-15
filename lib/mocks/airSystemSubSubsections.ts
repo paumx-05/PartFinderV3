@@ -1,7 +1,7 @@
 // lib/mocks/airSystemSubSubsections.ts
-import { SubSubsection } from '@/lib/types/parts';
+import { SubSubCategory } from '@/lib/types/parts';
 
-export const airSystemSubSubsections: SubSubsection[] = [
+export const airSystemSubSubsections: SubSubCategory[] = [
   {
     id: 'air-filter',
     name: 'Filtro de Aire',
@@ -9,12 +9,16 @@ export const airSystemSubSubsections: SubSubsection[] = [
     icon: 'Filter',
     parts: [
       {
+        id: 'air-filter-mann-001',
         name: 'Filtro de Aire Mann',
         brand: 'Mann-Filter',
         price: 12.99,
         image: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=300&h=200&fit=crop',
         description: 'Filtro de aire del motor, papel filtrante, alta eficiencia',
         compatibility: ['Fiat Grande Punto'],
+        category: 'air-system',
+        subcategory: 'air-filter',
+        subsubcategory: 'air-filter',
         inStock: true,
         rating: 4.4,
       },

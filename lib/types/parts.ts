@@ -1,13 +1,13 @@
 // lib/types/parts.ts
 export interface Part {
-  id: string;
+  id?: string;
   name: string;
   brand: string;
   price: number;
   image: string;
   description: string;
   compatibility: string[];
-  category: string;
+  category?: string;
   subcategory?: string;
   subsubcategory?: string;
   inStock: boolean;
