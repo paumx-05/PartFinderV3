@@ -342,15 +342,17 @@ lib/
 ## 13) Funcionalidad de Búsqueda de Clientes
 
 ### 13.1 Buscador de Clientes
-- [ ] Crear componente `ClientSearch.tsx`
+- [x] Crear componente `ClientSearch.tsx`
   - Campo de búsqueda por nombre, email o teléfono
   - Lista de resultados con información básica
   - Selección de cliente para asociar al pedido
   - Creación de nuevo cliente si no existe
+  - Opción rápida "Cliente particular" para ventas sin cliente específico
 
 ### 13.2 Gestión de Clientes Mock
-- [ ] Crear `lib/mocks/clients.ts`
+- [x] Crear `lib/mocks/clients.ts`
   - Cliente demo: Pau Maldonado
+  - Cliente particular: Opción rápida para ventas sin cliente específico
   - Estructura de datos de cliente
   - Funciones CRUD mock para clientes
   - Validaciones de datos

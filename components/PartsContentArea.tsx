@@ -239,7 +239,7 @@ export default function PartsContentArea({
         cartItemsCount={cartItemsCount}
       />
       
-      <div className="bg-gray-800 bg-opacity-70 rounded-lg p-6">
+      <div className="bg-gray-800 bg-opacity-70 rounded-lg p-4 sm:p-6 overflow-hidden">
         {viewMode === 'grid' ? (
           <PartsGrid parts={filteredParts} onAddToCart={onAddToCart} />
         ) : (

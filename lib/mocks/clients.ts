@@ -20,6 +20,22 @@ const defaultClients: Client[] = [
     lastOrderAt: Date.now() - 3600000, // 1 hora atrás
     totalOrders: 3,
     totalSpent: 156.75
+  },
+  {
+    id: 'client-particular',
+    name: 'Cliente particular',
+    email: 'particular@email.com',
+    phone: '+34 900 000 000',
+    address: {
+      street: 'Sin dirección específica',
+      city: 'Varios',
+      postalCode: '00000',
+      country: 'España'
+    },
+    createdAt: Date.now() - 172800000, // 2 días atrás
+    lastOrderAt: Date.now() - 7200000, // 2 horas atrás
+    totalOrders: 1,
+    totalSpent: 45.99
   }
 ];
 
@@ -76,7 +92,8 @@ export async function searchClients(query: string): Promise<Client[]> {
   return clients.filter(client => 
     client.name.toLowerCase().includes(searchTerm) ||
     client.email.toLowerCase().includes(searchTerm) ||
-    client.phone.includes(searchTerm)
+    client.phone.includes(searchTerm) ||
+    (searchTerm.includes('particular') && client.id === 'client-particular')
   );
 }
 

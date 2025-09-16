@@ -52,11 +52,11 @@ export default function SubSubsectionHeader({
 
       {/* SubSubsection Info */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-        <div className="flex-1">
-          <h3 className="text-lg font-bold text-red-600 mb-2">
+        <div className="flex-1 min-w-0">
+          <h3 className="text-lg font-bold text-red-600 mb-2 truncate">
             {subsubcategory.name}
           </h3>
-          <p className="text-sm text-gray-300 mb-2">
+          <p className="text-sm text-gray-300 mb-2 break-words leading-relaxed">
             {subsubcategory.description}
           </p>
           <div className="text-xs text-gray-400">

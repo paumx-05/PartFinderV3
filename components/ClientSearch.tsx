@@ -29,7 +29,31 @@ export default function ClientSearch({ onClientSelect }: ClientSearchProps) {
       setIsSearching(true);
       try {
         const results = await searchClients(searchQuery);
-        setSearchResults(results);
+        
+        // Si se busca "particular" o "cliente particular", agregar el cliente particular al inicio
+        const searchLower = searchQuery.toLowerCase();
+        if (searchLower.includes('particular') || searchLower.includes('cliente particular')) {
+          const particularClient = {
+            id: 'client-particular',
+            name: 'Cliente particular',
+            email: 'particular@email.com',
+            phone: '+34 900 000 000',
+            address: {
+              street: 'Sin dirección específica',
+              city: 'Varios',
+              postalCode: '00000',
+              country: 'España'
+            },
+            createdAt: Date.now() - 172800000,
+            lastOrderAt: Date.now() - 7200000,
+            totalOrders: 1,
+            totalSpent: 45.99
+          };
+          setSearchResults([particularClient, ...results]);
+        } else {
+          setSearchResults(results);
+        }
+        
         setShowResults(true);
       } catch (error) {
         console.error('Error searching clients:', error);
@@ -98,7 +122,7 @@ export default function ClientSearch({ onClientSelect }: ClientSearchProps) {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Buscar por nombre, email o teléfono..."
+                placeholder="Buscar cliente o escribir 'particular'..."
                 className="w-full pl-10 pr-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-sm"
               />
               {isSearching && (
@@ -188,6 +212,40 @@ export default function ClientSearch({ onClientSelect }: ClientSearchProps) {
                   </div>
                 </div>
               </div>
+            </div>
+          )}
+
+          {/* Opción rápida de Cliente particular */}
+          {!selectedClient && (
+            <div className="mt-2 sm:mt-3 p-2 bg-gray-700 rounded-lg border border-dashed border-gray-600">
+              <div className="flex items-center space-x-1 sm:space-x-2 text-gray-400 mb-1">
+                <User className="w-3 h-3 flex-shrink-0" />
+                <span className="text-xs">Cliente rápido</span>
+              </div>
+              <button 
+                onClick={() => {
+                  const particularClient = {
+                    id: 'client-particular',
+                    name: 'Cliente particular',
+                    email: 'particular@email.com',
+                    phone: '+34 900 000 000',
+                    address: {
+                      street: 'Sin dirección específica',
+                      city: 'Varios',
+                      postalCode: '00000',
+                      country: 'España'
+                    },
+                    createdAt: Date.now() - 172800000,
+                    lastOrderAt: Date.now() - 7200000,
+                    totalOrders: 1,
+                    totalSpent: 45.99
+                  };
+                  handleClientSelect(particularClient);
+                }}
+                className="text-red-400 hover:text-red-300 text-xs transition-colors truncate"
+              >
+                Seleccionar Cliente particular
+              </button>
             </div>
           )}
 

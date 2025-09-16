@@ -36,9 +36,9 @@ export default function PartsToolbar({
     <div className="bg-gray-800 bg-opacity-70 rounded-lg p-4 border-l-4 border-red-600">
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
         {/* Title and Vehicle Info */}
-        <div className="flex-1">
-          <h2 className="text-xl font-bold text-red-600 mb-2">{category.name}</h2>
-          <p className="text-sm text-gray-300 mb-2">{category.description}</p>
+        <div className="flex-1 min-w-0">
+          <h2 className="text-xl font-bold text-red-600 mb-2 truncate">{category.name}</h2>
+          <p className="text-sm text-gray-300 mb-2 break-words leading-relaxed">{category.description}</p>
           <div className="text-xs text-gray-400">
             Compatible con: {vehicleData.brand} {vehicleData.model} ({vehicleData.year})
           </div>
