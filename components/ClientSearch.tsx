@@ -29,31 +29,7 @@ export default function ClientSearch({ onClientSelect }: ClientSearchProps) {
       setIsSearching(true);
       try {
         const results = await searchClients(searchQuery);
-        
-        // Si se busca "particular" o "cliente particular", agregar el cliente particular al inicio
-        const searchLower = searchQuery.toLowerCase();
-        if (searchLower.includes('particular') || searchLower.includes('cliente particular')) {
-          const particularClient = {
-            id: 'client-particular',
-            name: 'Cliente particular',
-            email: 'particular@email.com',
-            phone: '+34 900 000 000',
-            address: {
-              street: 'Sin dirección específica',
-              city: 'Varios',
-              postalCode: '00000',
-              country: 'España'
-            },
-            createdAt: Date.now() - 172800000,
-            lastOrderAt: Date.now() - 7200000,
-            totalOrders: 1,
-            totalSpent: 45.99
-          };
-          setSearchResults([particularClient, ...results]);
-        } else {
-          setSearchResults(results);
-        }
-        
+        setSearchResults(results);
         setShowResults(true);
       } catch (error) {
         console.error('Error searching clients:', error);
@@ -223,24 +199,16 @@ export default function ClientSearch({ onClientSelect }: ClientSearchProps) {
                 <span className="text-xs">Cliente rápido</span>
               </div>
               <button 
-                onClick={() => {
-                  const particularClient = {
-                    id: 'client-particular',
-                    name: 'Cliente particular',
-                    email: 'particular@email.com',
-                    phone: '+34 900 000 000',
-                    address: {
-                      street: 'Sin dirección específica',
-                      city: 'Varios',
-                      postalCode: '00000',
-                      country: 'España'
-                    },
-                    createdAt: Date.now() - 172800000,
-                    lastOrderAt: Date.now() - 7200000,
-                    totalOrders: 1,
-                    totalSpent: 45.99
-                  };
-                  handleClientSelect(particularClient);
+                onClick={async () => {
+                  try {
+                    const results = await searchClients('particular');
+                    const particularClient = results.find(client => client.id === 'client-particular');
+                    if (particularClient) {
+                      handleClientSelect(particularClient);
+                    }
+                  } catch (error) {
+                    console.error('Error selecting particular client:', error);
+                  }
                 }}
                 className="text-red-400 hover:text-red-300 text-xs transition-colors truncate"
               >

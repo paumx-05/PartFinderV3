@@ -89,12 +89,22 @@ export async function searchClients(query: string): Promise<Client[]> {
   const clients = readClients();
   const searchTerm = query.toLowerCase().trim();
   
-  return clients.filter(client => 
+  // Filtrar clientes normales
+  const filteredClients = clients.filter(client => 
     client.name.toLowerCase().includes(searchTerm) ||
     client.email.toLowerCase().includes(searchTerm) ||
-    client.phone.includes(searchTerm) ||
-    (searchTerm.includes('particular') && client.id === 'client-particular')
+    client.phone.includes(searchTerm)
   );
+  
+  // Si se busca "particular", agregar el cliente particular al inicio
+  if (searchTerm.includes('particular') || searchTerm.includes('cliente particular')) {
+    const particularClient = clients.find(client => client.id === 'client-particular');
+    if (particularClient && !filteredClients.find(client => client.id === 'client-particular')) {
+      return [particularClient, ...filteredClients];
+    }
+  }
+  
+  return filteredClients;
 }
 
 // Obtener cliente por ID
@@ -170,5 +180,22 @@ export async function getAllClients(): Promise<Client[]> {
 
 // Inicializar clientes por defecto si no existen
 if (typeof window !== 'undefined') {
-  readClients();
+  // Limpiar localStorage para forzar reinicialización con el cliente particular
+  const existingClients = localStorage.getItem(CLIENTS_KEY);
+  if (!existingClients) {
+    writeClients(defaultClients);
+  } else {
+    // Verificar si el cliente particular existe, si no, agregarlo
+    try {
+      const clients = JSON.parse(existingClients);
+      const hasParticularClient = clients.some((client: Client) => client.id === 'client-particular');
+      if (!hasParticularClient) {
+        clients.push(defaultClients[1]); // Agregar el cliente particular
+        writeClients(clients);
+      }
+    } catch (error) {
+      // Si hay error parseando, reinicializar con clientes por defecto
+      writeClients(defaultClients);
+    }
+  }
 }
