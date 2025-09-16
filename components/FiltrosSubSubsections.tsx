@@ -20,13 +20,17 @@ interface FiltrosSubSubsectionsProps {
   onAddToCart?: (part: any) => void;
   cartItemsCount?: number;
   onBackToSubcategory?: () => void;
+  onBackToCategory?: () => void;
+  onBackToHome?: () => void;
 }
 
 export default function FiltrosSubSubsections({ 
   vehicleData, 
   onAddToCart, 
   cartItemsCount = 0,
-  onBackToSubcategory
+  onBackToSubcategory,
+  onBackToCategory,
+  onBackToHome
 }: FiltrosSubSubsectionsProps) {
   const [activeSubSubcategory, setActiveSubSubcategory] = useState('oil-filter');
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
@@ -73,6 +77,8 @@ export default function FiltrosSubSubsections({
         subcategoryName="Filtros"
         subsubcategory={currentSubSubcategory}
         onBackToSubcategory={onBackToSubcategory}
+        onBackToCategory={onBackToCategory}
+        onBackToHome={onBackToHome}
       />
 
       {/* Navegación de subsubcategorías */}

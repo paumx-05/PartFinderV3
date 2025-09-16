@@ -20,13 +20,17 @@ interface BeltSubSubsectionsProps {
   onAddToCart?: (part: any) => void;
   cartItemsCount?: number;
   onBackToSubcategory?: () => void;
+  onBackToCategory?: () => void;
+  onBackToHome?: () => void;
 }
 
 export default function BeltSubSubsections({ 
   vehicleData, 
   onAddToCart, 
   cartItemsCount = 0,
-  onBackToSubcategory
+  onBackToSubcategory,
+  onBackToCategory,
+  onBackToHome
 }: BeltSubSubsectionsProps) {
   const [activeSubSubcategory, setActiveSubSubcategory] = useState('belts');
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
@@ -67,6 +71,8 @@ export default function BeltSubSubsections({
         subcategoryName="Correa Poli V"
         subsubcategory={currentSubSubcategory}
         onBackToSubcategory={onBackToSubcategory}
+        onBackToCategory={onBackToCategory}
+        onBackToHome={onBackToHome}
       />
 
       {/* Navigation */}

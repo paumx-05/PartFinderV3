@@ -10,6 +10,8 @@ import PartsList from './PartsList';
 import ClutchFilters from './ClutchFilters';
 import ClutchActuationSubSubsections from './ClutchActuationSubSubsections';
 import { clutchSubSubsections } from '@/lib/mocks/clutchSubSubsections';
+import CategoriesSidebar from './CategoriesSidebar';
+import { categories } from '@/lib/mocks/parts';
 
 interface ClutchSubsectionsProps {
   vehicleData: {
@@ -21,13 +23,15 @@ interface ClutchSubsectionsProps {
   onAddToCart?: (part: any) => void;
   cartItemsCount?: number;
   onBackToSubcategory?: () => void;
+  onCategoryChange?: (categoryId: string) => void;
 }
 
 export default function ClutchSubsections({ 
   vehicleData, 
   onAddToCart, 
   cartItemsCount = 0,
-  onBackToSubcategory
+  onBackToSubcategory,
+  onCategoryChange
 }: ClutchSubsectionsProps) {
   const [activeSubSubcategory, setActiveSubSubcategory] = useState('clutch-kit');
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
@@ -94,6 +98,17 @@ export default function ClutchSubsections({
 
   return (
     <div className="space-y-6">
+      {/* Mobile Categories Selector - Show general categories for navigation */}
+      {onCategoryChange && (
+        <div className="lg:hidden">
+          <CategoriesSidebar
+            categories={categories}
+            activeCategory="clutch"
+            onCategoryChange={onCategoryChange}
+          />
+        </div>
+      )}
+
       {/* Header con breadcrumbs */}
       <SubSubsectionHeader
         categoryName="Embrague"

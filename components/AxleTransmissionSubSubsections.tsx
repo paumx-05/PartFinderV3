@@ -9,6 +9,8 @@ import PartsGrid from './PartsGrid';
 import PartsList from './PartsList';
 import AxleTransmissionFilters from './AxleTransmissionFilters';
 import { axleTransmissionSubSubsections } from '@/lib/mocks/axleTransmissionSubSubsections';
+import CategoriesSidebar from './CategoriesSidebar';
+import { categories } from '@/lib/mocks/parts';
 
 interface AxleTransmissionSubSubsectionsProps {
   vehicleData: {
@@ -20,13 +22,15 @@ interface AxleTransmissionSubSubsectionsProps {
   onAddToCart?: (part: any) => void;
   cartItemsCount?: number;
   onBackToSubcategory?: () => void;
+  onCategoryChange?: (categoryId: string) => void;
 }
 
 export default function AxleTransmissionSubSubsections({ 
   vehicleData, 
   onAddToCart, 
   cartItemsCount = 0,
-  onBackToSubcategory
+  onBackToSubcategory,
+  onCategoryChange
 }: AxleTransmissionSubSubsectionsProps) {
   const [activeSubSubcategory, setActiveSubSubcategory] = useState('driveshaft');
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
@@ -69,6 +73,17 @@ export default function AxleTransmissionSubSubsections({
 
   return (
     <div className="space-y-6">
+      {/* Mobile Categories Selector - Show general categories for navigation */}
+      {onCategoryChange && (
+        <div className="lg:hidden">
+          <CategoriesSidebar
+            categories={categories}
+            activeCategory="axle-transmission"
+            onCategoryChange={onCategoryChange}
+          />
+        </div>
+      )}
+
       {/* Header con breadcrumbs */}
       <SubSubsectionHeader
         categoryName="Transmisión por ejes"

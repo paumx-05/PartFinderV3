@@ -9,6 +9,8 @@ import PartsGrid from './PartsGrid';
 import PartsList from './PartsList';
 import FuelSystemFilters from './FuelSystemFilters';
 import { fuelSystemSubSubsections } from '@/lib/mocks/fuelSystemSubSubsections';
+import CategoriesSidebar from './CategoriesSidebar';
+import { categories } from '@/lib/mocks/parts';
 
 interface FuelSystemSubSubsectionsProps {
   vehicleData: {
@@ -20,13 +22,15 @@ interface FuelSystemSubSubsectionsProps {
   onAddToCart?: (part: any) => void;
   cartItemsCount?: number;
   onBackToSubcategory?: () => void;
+  onCategoryChange?: (categoryId: string) => void;
 }
 
 export default function FuelSystemSubSubsections({ 
   vehicleData, 
   onAddToCart, 
   cartItemsCount = 0,
-  onBackToSubcategory
+  onBackToSubcategory,
+  onCategoryChange
 }: FuelSystemSubSubsectionsProps) {
   const [activeSubSubcategory, setActiveSubSubcategory] = useState('fuel-filter');
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
@@ -69,6 +73,17 @@ export default function FuelSystemSubSubsections({
 
   return (
     <div className="space-y-6">
+      {/* Mobile Categories Selector - Show general categories for navigation */}
+      {onCategoryChange && (
+        <div className="lg:hidden">
+          <CategoriesSidebar
+            categories={categories}
+            activeCategory="fuel-system"
+            onCategoryChange={onCategoryChange}
+          />
+        </div>
+      )}
+
       {/* Header con breadcrumbs */}
       <SubSubsectionHeader
         categoryName="Alimentación de combustible"

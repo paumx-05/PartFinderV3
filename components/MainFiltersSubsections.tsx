@@ -9,6 +9,8 @@ import PartsGrid from './PartsGrid';
 import PartsList from './PartsList';
 import MainFiltersFilters from './MainFiltersFilters';
 import { mainFiltersSubsections } from '@/lib/mocks/mainFiltersSubsections';
+import CategoriesSidebar from './CategoriesSidebar';
+import { categories } from '@/lib/mocks/parts';
 
 interface MainFiltersSubsectionsProps {
   vehicleData: {
@@ -20,13 +22,15 @@ interface MainFiltersSubsectionsProps {
   onAddToCart?: (part: any) => void;
   cartItemsCount?: number;
   onBackToSubcategory?: () => void;
+  onCategoryChange?: (categoryId: string) => void;
 }
 
 export default function MainFiltersSubsections({ 
   vehicleData, 
   onAddToCart, 
   cartItemsCount = 0,
-  onBackToSubcategory
+  onBackToSubcategory,
+  onCategoryChange
 }: MainFiltersSubsectionsProps) {
   const [activeSubSubcategory, setActiveSubSubcategory] = useState('oil-filter');
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
@@ -67,6 +71,17 @@ export default function MainFiltersSubsections({
 
   return (
     <div className="space-y-6">
+      {/* Mobile Categories Selector - Show general categories for navigation */}
+      {onCategoryChange && (
+        <div className="lg:hidden">
+          <CategoriesSidebar
+            categories={categories}
+            activeCategory="filters"
+            onCategoryChange={onCategoryChange}
+          />
+        </div>
+      )}
+
       {/* Header con breadcrumbs */}
       <SubSubsectionHeader
         categoryName="Filtros"

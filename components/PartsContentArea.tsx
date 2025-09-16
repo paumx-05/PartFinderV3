@@ -36,6 +36,7 @@ interface PartsContentAreaProps {
   categories?: Category[];
   activeCategory?: string;
   onCategoryChange?: (categoryId: string) => void;
+  onBackToHome?: () => void;
 }
 
 export default function PartsContentArea({ 
@@ -49,7 +50,8 @@ export default function PartsContentArea({
   cartItemsCount = 0,
   categories,
   activeCategory,
-  onCategoryChange
+  onCategoryChange,
+  onBackToHome
 }: PartsContentAreaProps) {
   if (!category) {
     return (
@@ -66,6 +68,9 @@ export default function PartsContentArea({
         vehicleData={vehicleData}
         onAddToCart={onAddToCart}
         cartItemsCount={cartItemsCount}
+        onBackToCategory={() => onCategoryChange?.('maintenance')}
+        onBackToHome={onBackToHome}
+        onCategoryChange={onCategoryChange}
       />
     );
   }
@@ -77,6 +82,7 @@ export default function PartsContentArea({
         vehicleData={vehicleData}
         onAddToCart={onAddToCart}
         cartItemsCount={cartItemsCount}
+        onCategoryChange={onCategoryChange}
       />
     );
   }
@@ -88,6 +94,7 @@ export default function PartsContentArea({
         vehicleData={vehicleData}
         onAddToCart={onAddToCart}
         cartItemsCount={cartItemsCount}
+        onCategoryChange={onCategoryChange}
       />
     );
   }
@@ -99,6 +106,7 @@ export default function PartsContentArea({
         vehicleData={vehicleData}
         onAddToCart={onAddToCart}
         cartItemsCount={cartItemsCount}
+        onCategoryChange={onCategoryChange}
       />
     );
   }
@@ -110,6 +118,7 @@ export default function PartsContentArea({
         vehicleData={vehicleData}
         onAddToCart={onAddToCart}
         cartItemsCount={cartItemsCount}
+        onCategoryChange={onCategoryChange}
       />
     );
   }
@@ -121,6 +130,7 @@ export default function PartsContentArea({
         vehicleData={vehicleData}
         onAddToCart={onAddToCart}
         cartItemsCount={cartItemsCount}
+        onCategoryChange={onCategoryChange}
       />
     );
   }
@@ -132,6 +142,7 @@ export default function PartsContentArea({
         vehicleData={vehicleData}
         onAddToCart={onAddToCart}
         cartItemsCount={cartItemsCount}
+        onCategoryChange={onCategoryChange}
       />
     );
   }
@@ -143,6 +154,7 @@ export default function PartsContentArea({
         vehicleData={vehicleData}
         onAddToCart={onAddToCart}
         cartItemsCount={cartItemsCount}
+        onCategoryChange={onCategoryChange}
       />
     );
   }
@@ -154,6 +166,7 @@ export default function PartsContentArea({
         vehicleData={vehicleData}
         onAddToCart={onAddToCart}
         cartItemsCount={cartItemsCount}
+        onCategoryChange={onCategoryChange}
       />
     );
   }
@@ -165,6 +178,7 @@ export default function PartsContentArea({
         vehicleData={vehicleData}
         onAddToCart={onAddToCart}
         cartItemsCount={cartItemsCount}
+        onCategoryChange={onCategoryChange}
       />
     );
   }
@@ -176,6 +190,7 @@ export default function PartsContentArea({
         vehicleData={vehicleData}
         onAddToCart={onAddToCart}
         cartItemsCount={cartItemsCount}
+        onCategoryChange={onCategoryChange}
       />
     );
   }
@@ -187,6 +202,7 @@ export default function PartsContentArea({
         vehicleData={vehicleData}
         onAddToCart={onAddToCart}
         cartItemsCount={cartItemsCount}
+        onCategoryChange={onCategoryChange}
       />
     );
   }

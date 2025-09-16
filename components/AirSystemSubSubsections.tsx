@@ -10,6 +10,8 @@ import PartsList from './PartsList';
 import AirSystemFilters from './AirSystemFilters';
 import SuperchargingSubSubsections from './SuperchargingSubSubsections';
 import { airSystemSubSubsections } from '@/lib/mocks/airSystemSubSubsections';
+import CategoriesSidebar from './CategoriesSidebar';
+import { categories } from '@/lib/mocks/parts';
 
 interface AirSystemSubSubsectionsProps {
   vehicleData: {
@@ -21,13 +23,15 @@ interface AirSystemSubSubsectionsProps {
   onAddToCart?: (part: any) => void;
   cartItemsCount?: number;
   onBackToSubcategory?: () => void;
+  onCategoryChange?: (categoryId: string) => void;
 }
 
 export default function AirSystemSubSubsections({ 
   vehicleData, 
   onAddToCart, 
   cartItemsCount = 0,
-  onBackToSubcategory
+  onBackToSubcategory,
+  onCategoryChange
 }: AirSystemSubSubsectionsProps) {
   const [activeSubSubcategory, setActiveSubSubcategory] = useState('air-filter');
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
@@ -82,6 +86,17 @@ export default function AirSystemSubSubsections({
 
   return (
     <div className="space-y-6">
+      {/* Mobile Categories Selector - Show general categories for navigation */}
+      {onCategoryChange && (
+        <div className="lg:hidden">
+          <CategoriesSidebar
+            categories={categories}
+            activeCategory="air-system"
+            onCategoryChange={onCategoryChange}
+          />
+        </div>
+      )}
+
       {/* Header con breadcrumbs */}
       <SubSubsectionHeader
         categoryName="Alimentación de aire"

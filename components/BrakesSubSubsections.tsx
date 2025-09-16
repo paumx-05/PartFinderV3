@@ -10,6 +10,8 @@ import PartsList from './PartsList';
 import BrakesFilters from './BrakesFilters';
 import BrakeDiscSubSubsections from './BrakeDiscSubSubsections';
 import BrakeDrumSubSubsections from './BrakeDrumSubSubsections';
+import CategoriesSidebar from './CategoriesSidebar';
+import { categories } from '@/lib/mocks/parts';
 
 interface BrakesSubSubsectionsProps {
   vehicleData: {
@@ -21,6 +23,9 @@ interface BrakesSubSubsectionsProps {
   onAddToCart?: (part: any) => void;
   cartItemsCount?: number;
   onBackToSubcategory?: () => void;
+  onBackToCategory?: () => void;
+  onBackToHome?: () => void;
+  onCategoryChange?: (categoryId: string) => void;
 }
 
 // Datos temporales para las 6 subsecciones del sistema de frenado
@@ -73,7 +78,10 @@ export default function BrakesSubSubsections({
   vehicleData, 
   onAddToCart, 
   cartItemsCount = 0,
-  onBackToSubcategory
+  onBackToSubcategory,
+  onBackToCategory,
+  onBackToHome,
+  onCategoryChange
 }: BrakesSubSubsectionsProps) {
   const [activeSubSubcategory, setActiveSubSubcategory] = useState('brake-disc');
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
@@ -162,12 +170,25 @@ export default function BrakesSubSubsections({
 
   return (
     <div className="space-y-6">
+      {/* Mobile Categories Selector - Show general categories for navigation */}
+      {onCategoryChange && (
+        <div className="lg:hidden">
+          <CategoriesSidebar
+            categories={categories}
+            activeCategory="braking"
+            onCategoryChange={onCategoryChange}
+          />
+        </div>
+      )}
+
       {/* Header con breadcrumbs */}
       <SubSubsectionHeader
         categoryName="Sistema de Frenado"
         subcategoryName="Sistema de Frenado"
         subsubcategory={currentSubSubcategory}
         onBackToSubcategory={onBackToSubcategory}
+        onBackToCategory={onBackToCategory}
+        onBackToHome={onBackToHome}
       />
 
       {/* Navegación de subsubcategorías */}

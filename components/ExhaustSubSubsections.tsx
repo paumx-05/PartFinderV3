@@ -9,6 +9,8 @@ import PartsGrid from './PartsGrid';
 import PartsList from './PartsList';
 import ExhaustFilters from './ExhaustFilters';
 import { exhaustSubSubsections } from '@/lib/mocks/exhaustSubSubsections';
+import CategoriesSidebar from './CategoriesSidebar';
+import { categories } from '@/lib/mocks/parts';
 
 interface ExhaustSubSubsectionsProps {
   vehicleData: {
@@ -20,13 +22,15 @@ interface ExhaustSubSubsectionsProps {
   onAddToCart?: (part: any) => void;
   cartItemsCount?: number;
   onBackToSubcategory?: () => void;
+  onCategoryChange?: (categoryId: string) => void;
 }
 
 export default function ExhaustSubSubsections({ 
   vehicleData, 
   onAddToCart, 
   cartItemsCount = 0,
-  onBackToSubcategory
+  onBackToSubcategory,
+  onCategoryChange
 }: ExhaustSubSubsectionsProps) {
   const [activeSubSubcategory, setActiveSubSubcategory] = useState('catalyst');
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
@@ -69,6 +73,17 @@ export default function ExhaustSubSubsections({
 
   return (
     <div className="space-y-6">
+      {/* Mobile Categories Selector - Show general categories for navigation */}
+      {onCategoryChange && (
+        <div className="lg:hidden">
+          <CategoriesSidebar
+            categories={categories}
+            activeCategory="exhaust"
+            onCategoryChange={onCategoryChange}
+          />
+        </div>
+      )}
+
       {/* Header con breadcrumbs */}
       <SubSubsectionHeader
         categoryName="Sistema de Escape"

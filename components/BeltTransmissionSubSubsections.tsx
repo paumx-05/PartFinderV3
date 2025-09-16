@@ -9,6 +9,8 @@ import PartsGrid from './PartsGrid';
 import PartsList from './PartsList';
 import BeltTransmissionFilters from './BeltTransmissionFilters';
 import { beltTransmissionSubSubsections } from '@/lib/mocks/beltTransmissionSubSubsections';
+import CategoriesSidebar from './CategoriesSidebar';
+import { categories } from '@/lib/mocks/parts';
 
 interface BeltTransmissionSubSubsectionsProps {
   vehicleData: {
@@ -20,13 +22,15 @@ interface BeltTransmissionSubSubsectionsProps {
   onAddToCart?: (part: any) => void;
   cartItemsCount?: number;
   onBackToSubcategory?: () => void;
+  onCategoryChange?: (categoryId: string) => void;
 }
 
 export default function BeltTransmissionSubSubsections({ 
   vehicleData, 
   onAddToCart, 
   cartItemsCount = 0,
-  onBackToSubcategory
+  onBackToSubcategory,
+  onCategoryChange
 }: BeltTransmissionSubSubsectionsProps) {
   const [activeSubSubcategory, setActiveSubSubcategory] = useState('timing-belt-kit');
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
@@ -69,6 +73,17 @@ export default function BeltTransmissionSubSubsections({
 
   return (
     <div className="space-y-6">
+      {/* Mobile Categories Selector - Show general categories for navigation */}
+      {onCategoryChange && (
+        <div className="lg:hidden">
+          <CategoriesSidebar
+            categories={categories}
+            activeCategory="belt-transmission"
+            onCategoryChange={onCategoryChange}
+          />
+        </div>
+      )}
+
       {/* Header con breadcrumbs */}
       <SubSubsectionHeader
         categoryName="Transmisión por correas"

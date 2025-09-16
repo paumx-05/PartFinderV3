@@ -20,13 +20,17 @@ interface SuspensionSubSubsectionsProps {
   onAddToCart?: (part: any) => void;
   cartItemsCount?: number;
   onBackToSubcategory?: () => void;
+  onBackToCategory?: () => void;
+  onBackToHome?: () => void;
 }
 
 export default function SuspensionSubSubsections({ 
   vehicleData, 
   onAddToCart, 
   cartItemsCount = 0,
-  onBackToSubcategory
+  onBackToSubcategory,
+  onBackToCategory,
+  onBackToHome
 }: SuspensionSubSubsectionsProps) {
   const [activeSubSubcategory, setActiveSubSubcategory] = useState('steering-joint');
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
@@ -68,6 +72,8 @@ export default function SuspensionSubSubsections({
         subcategoryName="Dirección"
         subsubcategory={currentSubSubcategory}
         onBackToSubcategory={onBackToSubcategory}
+        onBackToCategory={onBackToCategory}
+        onBackToHome={onBackToHome}
       />
 
       {/* Navigation */}

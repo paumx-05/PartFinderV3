@@ -13,6 +13,8 @@ import WaterPumpSubSubsections from './WaterPumpSubSubsections';
 import ThermostatSubSubsections from './ThermostatSubSubsections';
 import PipesClampsSubSubsections from './PipesClampsSubSubsections';
 import { coolingSubSubsections } from '@/lib/mocks/coolingSubSubsections';
+import CategoriesSidebar from './CategoriesSidebar';
+import { categories } from '@/lib/mocks/parts';
 
 interface CoolingSubSubsectionsProps {
   vehicleData: {
@@ -24,13 +26,15 @@ interface CoolingSubSubsectionsProps {
   onAddToCart?: (part: any) => void;
   cartItemsCount?: number;
   onBackToSubcategory?: () => void;
+  onCategoryChange?: (categoryId: string) => void;
 }
 
 export default function CoolingSubSubsections({ 
   vehicleData, 
   onAddToCart, 
   cartItemsCount = 0,
-  onBackToSubcategory
+  onBackToSubcategory,
+  onCategoryChange
 }: CoolingSubSubsectionsProps) {
   const [activeSubSubcategory, setActiveSubSubcategory] = useState('water-pump');
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
@@ -169,6 +173,17 @@ export default function CoolingSubSubsections({
 
   return (
     <div className="space-y-6">
+      {/* Mobile Categories Selector - Show general categories for navigation */}
+      {onCategoryChange && (
+        <div className="lg:hidden">
+          <CategoriesSidebar
+            categories={categories}
+            activeCategory="cooling"
+            onCategoryChange={onCategoryChange}
+          />
+        </div>
+      )}
+
       {/* Header con breadcrumbs */}
       <SubSubsectionHeader
         categoryName="Refrigeración"

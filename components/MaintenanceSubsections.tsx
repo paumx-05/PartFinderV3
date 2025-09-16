@@ -24,6 +24,8 @@ import { suspensionSubSubsections } from '@/lib/mocks/suspensionSubSubsections';
 import { steeringSubSubsections } from '@/lib/mocks/steeringSubSubsections';
 import { beltSubSubsections } from '@/lib/mocks/beltSubSubsections';
 import { wipersSubSubsections } from '@/lib/mocks/wipersSubSubsections';
+import CategoriesSidebar from './CategoriesSidebar';
+import { categories } from '@/lib/mocks/parts';
 
 interface MaintenanceSubsectionsProps {
   vehicleData: {
@@ -34,12 +36,18 @@ interface MaintenanceSubsectionsProps {
   };
   onAddToCart?: (part: any) => void;
   cartItemsCount?: number;
+  onBackToCategory?: () => void;
+  onBackToHome?: () => void;
+  onCategoryChange?: (categoryId: string) => void;
 }
 
 export default function MaintenanceSubsections({ 
   vehicleData, 
   onAddToCart, 
-  cartItemsCount = 0 
+  cartItemsCount = 0,
+  onBackToCategory,
+  onBackToHome,
+  onCategoryChange
 }: MaintenanceSubsectionsProps) {
   const [activeSubcategory, setActiveSubcategory] = useState('oils');
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
@@ -180,6 +188,8 @@ export default function MaintenanceSubsections({
         onAddToCart={onAddToCart}
         cartItemsCount={cartItemsCount}
         onBackToSubcategory={handleBackToSubcategory}
+        onBackToCategory={onBackToCategory}
+        onBackToHome={onBackToHome}
       />
     );
   }
@@ -192,6 +202,8 @@ export default function MaintenanceSubsections({
         onAddToCart={onAddToCart}
         cartItemsCount={cartItemsCount}
         onBackToSubcategory={handleBackToSubcategory}
+        onBackToCategory={onBackToCategory}
+        onBackToHome={onBackToHome}
       />
     );
   }
@@ -204,6 +216,8 @@ export default function MaintenanceSubsections({
         onAddToCart={onAddToCart}
         cartItemsCount={cartItemsCount}
         onBackToSubcategory={handleBackToSubcategory}
+        onBackToCategory={onBackToCategory}
+        onBackToHome={onBackToHome}
       />
     );
   }
@@ -216,6 +230,8 @@ export default function MaintenanceSubsections({
         onAddToCart={onAddToCart}
         cartItemsCount={cartItemsCount}
         onBackToSubcategory={handleBackToSubcategory}
+        onBackToCategory={onBackToCategory}
+        onBackToHome={onBackToHome}
       />
     );
   }
@@ -228,6 +244,8 @@ export default function MaintenanceSubsections({
         onAddToCart={onAddToCart}
         cartItemsCount={cartItemsCount}
         onBackToSubcategory={handleBackToSubcategory}
+        onBackToCategory={onBackToCategory}
+        onBackToHome={onBackToHome}
       />
     );
   }
@@ -240,6 +258,8 @@ export default function MaintenanceSubsections({
         onAddToCart={onAddToCart}
         cartItemsCount={cartItemsCount}
         onBackToSubcategory={handleBackToSubcategory}
+        onBackToCategory={onBackToCategory}
+        onBackToHome={onBackToHome}
       />
     );
   }
@@ -252,6 +272,8 @@ export default function MaintenanceSubsections({
         onAddToCart={onAddToCart}
         cartItemsCount={cartItemsCount}
         onBackToSubcategory={handleBackToSubcategory}
+        onBackToCategory={onBackToCategory}
+        onBackToHome={onBackToHome}
       />
     );
   }
@@ -264,12 +286,25 @@ export default function MaintenanceSubsections({
         onAddToCart={onAddToCart}
         cartItemsCount={cartItemsCount}
         onBackToSubcategory={handleBackToSubcategory}
+        onBackToCategory={onBackToCategory}
+        onBackToHome={onBackToHome}
       />
     );
   }
 
   return (
     <div className="space-y-6">
+      {/* Mobile Categories Selector - Show general categories for navigation */}
+      {onCategoryChange && (
+        <div className="lg:hidden">
+          <CategoriesSidebar
+            categories={categories}
+            activeCategory="maintenance"
+            onCategoryChange={onCategoryChange}
+          />
+        </div>
+      )}
+
       {/* Subsection Header with Breadcrumbs */}
       <SubsectionHeader
         categoryName="Mantenimientos básicos"

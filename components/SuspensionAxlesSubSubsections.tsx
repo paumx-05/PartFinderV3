@@ -9,6 +9,8 @@ import PartsGrid from './PartsGrid';
 import PartsList from './PartsList';
 import SuspensionAxlesFilters from './SuspensionAxlesFilters';
 import { suspensionAxlesSubSubsections } from '@/lib/mocks/suspensionAxlesSubSubsections';
+import CategoriesSidebar from './CategoriesSidebar';
+import { categories } from '@/lib/mocks/parts';
 
 interface SuspensionAxlesSubSubsectionsProps {
   vehicleData: {
@@ -20,13 +22,15 @@ interface SuspensionAxlesSubSubsectionsProps {
   onAddToCart?: (part: any) => void;
   cartItemsCount?: number;
   onBackToSubcategory?: () => void;
+  onCategoryChange?: (categoryId: string) => void;
 }
 
 export default function SuspensionAxlesSubSubsections({ 
   vehicleData, 
   onAddToCart, 
   cartItemsCount = 0,
-  onBackToSubcategory
+  onBackToSubcategory,
+  onCategoryChange
 }: SuspensionAxlesSubSubsectionsProps) {
   const [activeSubSubcategory, setActiveSubSubcategory] = useState('shock-absorbers');
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
@@ -69,6 +73,17 @@ export default function SuspensionAxlesSubSubsections({
 
   return (
     <div className="space-y-6">
+      {/* Mobile Categories Selector - Show general categories for navigation */}
+      {onCategoryChange && (
+        <div className="lg:hidden">
+          <CategoriesSidebar
+            categories={categories}
+            activeCategory="suspension-axles"
+            onCategoryChange={onCategoryChange}
+          />
+        </div>
+      )}
+
       {/* Header con breadcrumbs */}
       <SubSubsectionHeader
         categoryName="Suspensión ejes"

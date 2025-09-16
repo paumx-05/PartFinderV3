@@ -20,13 +20,17 @@ interface OilsSubSubsectionsProps {
   onAddToCart?: (part: any) => void;
   cartItemsCount?: number;
   onBackToSubcategory?: () => void;
+  onBackToCategory?: () => void;
+  onBackToHome?: () => void;
 }
 
 export default function OilsSubSubsections({ 
   vehicleData, 
   onAddToCart, 
   cartItemsCount = 0,
-  onBackToSubcategory
+  onBackToSubcategory,
+  onBackToCategory,
+  onBackToHome
 }: OilsSubSubsectionsProps) {
   const [activeSubSubcategory, setActiveSubSubcategory] = useState('engine-oil');
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
@@ -72,6 +76,8 @@ export default function OilsSubSubsections({
         subcategoryName="Aceites"
         subsubcategory={currentSubSubcategory}
         onBackToSubcategory={onBackToSubcategory}
+        onBackToCategory={onBackToCategory}
+        onBackToHome={onBackToHome}
       />
 
       {/* SubSubcategories Navigation */}

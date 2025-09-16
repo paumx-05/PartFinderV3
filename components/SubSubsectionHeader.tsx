@@ -9,27 +9,36 @@ interface SubSubsectionHeaderProps {
   subcategoryName: string;
   subsubcategory: SubSubCategory;
   onBackToSubcategory?: () => void;
+  onBackToCategory?: () => void;
+  onBackToHome?: () => void;
 }
 
 export default function SubSubsectionHeader({ 
   categoryName, 
   subcategoryName,
   subsubcategory, 
-  onBackToSubcategory 
+  onBackToSubcategory,
+  onBackToCategory,
+  onBackToHome
 }: SubSubsectionHeaderProps) {
   return (
     <div className="bg-gray-800 bg-opacity-70 rounded-lg p-4 border-l-4 border-red-600">
       {/* Breadcrumbs */}
       <nav className="flex items-center space-x-2 text-sm text-gray-400 mb-4">
         <button
-          onClick={() => {}}
+          onClick={onBackToHome}
           className="flex items-center space-x-1 hover:text-red-400 transition-colors"
         >
           <Home className="w-4 h-4" />
           <span>Inicio</span>
         </button>
         <ChevronRight className="w-4 h-4" />
-        <span className="text-gray-300">{categoryName}</span>
+        <button
+          onClick={onBackToCategory}
+          className="text-gray-300 hover:text-red-400 transition-colors"
+        >
+          {categoryName}
+        </button>
         <ChevronRight className="w-4 h-4" />
         <button
           onClick={onBackToSubcategory}

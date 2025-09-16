@@ -20,13 +20,17 @@ interface IgnitionSubSubsectionsProps {
   onAddToCart?: (part: any) => void;
   cartItemsCount?: number;
   onBackToSubcategory?: () => void;
+  onBackToCategory?: () => void;
+  onBackToHome?: () => void;
 }
 
 export default function IgnitionSubSubsections({ 
   vehicleData, 
   onAddToCart, 
   cartItemsCount = 0,
-  onBackToSubcategory
+  onBackToSubcategory,
+  onBackToCategory,
+  onBackToHome
 }: IgnitionSubSubsectionsProps) {
   const [activeSubSubcategory, setActiveSubSubcategory] = useState('battery');
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
@@ -73,6 +77,8 @@ export default function IgnitionSubSubsections({
         subcategoryName="Sistema de Encendido"
         subsubcategory={currentSubSubcategory}
         onBackToSubcategory={onBackToSubcategory}
+        onBackToCategory={onBackToCategory}
+        onBackToHome={onBackToHome}
       />
 
       {/* SubSubcategories Navigation */}

@@ -20,13 +20,17 @@ interface WipersSubSubsectionsProps {
   onAddToCart?: (part: any) => void;
   cartItemsCount?: number;
   onBackToSubcategory?: () => void;
+  onBackToCategory?: () => void;
+  onBackToHome?: () => void;
 }
 
 export default function WipersSubSubsections({ 
   vehicleData, 
   onAddToCart, 
   cartItemsCount = 0,
-  onBackToSubcategory
+  onBackToSubcategory,
+  onBackToCategory,
+  onBackToHome
 }: WipersSubSubsectionsProps) {
   const [activeSubSubcategory, setActiveSubSubcategory] = useState('washer-fluids');
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
@@ -67,6 +71,8 @@ export default function WipersSubSubsections({
         subcategoryName="Limpia Parabrisas"
         subsubcategory={currentSubSubcategory}
         onBackToSubcategory={onBackToSubcategory}
+        onBackToCategory={onBackToCategory}
+        onBackToHome={onBackToHome}
       />
 
       {/* Navigation */}

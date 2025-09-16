@@ -9,6 +9,8 @@ import PartsGrid from './PartsGrid';
 import PartsList from './PartsList';
 import SteeringFilters from './SteeringFilters';
 import { steeringSubSubsections } from '@/lib/mocks/steeringSubSubsections';
+import CategoriesSidebar from './CategoriesSidebar';
+import { categories } from '@/lib/mocks/parts';
 
 interface SteeringSubSubsectionsProps {
   vehicleData: {
@@ -20,13 +22,19 @@ interface SteeringSubSubsectionsProps {
   onAddToCart?: (part: any) => void;
   cartItemsCount?: number;
   onBackToSubcategory?: () => void;
+  onBackToCategory?: () => void;
+  onBackToHome?: () => void;
+  onCategoryChange?: (categoryId: string) => void;
 }
 
 export default function SteeringSubSubsections({ 
   vehicleData, 
   onAddToCart, 
   cartItemsCount = 0,
-  onBackToSubcategory
+  onBackToSubcategory,
+  onBackToCategory,
+  onBackToHome,
+  onCategoryChange
 }: SteeringSubSubsectionsProps) {
   const [activeSubSubcategory, setActiveSubSubcategory] = useState('steering-ball-joints');
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
@@ -69,12 +77,25 @@ export default function SteeringSubSubsections({
 
   return (
     <div className="space-y-6">
+      {/* Mobile Categories Selector - Show general categories for navigation */}
+      {onCategoryChange && (
+        <div className="lg:hidden">
+          <CategoriesSidebar
+            categories={categories}
+            activeCategory="steering"
+            onCategoryChange={onCategoryChange}
+          />
+        </div>
+      )}
+
       {/* Header con breadcrumbs */}
       <SubSubsectionHeader
         categoryName="Dirección"
         subcategoryName="Dirección"
         subsubcategory={currentSubSubcategory}
         onBackToSubcategory={onBackToSubcategory}
+        onBackToCategory={onBackToCategory}
+        onBackToHome={onBackToHome}
       />
 
       {/* Navegación de subsubcategorías */}

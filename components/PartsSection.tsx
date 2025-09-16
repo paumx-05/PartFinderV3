@@ -1,6 +1,7 @@
 // components/PartsSection.tsx
 'use client';
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import CategoriesSidebar from './CategoriesSidebar';
 import PartsContentArea from './PartsContentArea';
 import { categories } from '@/lib/mocks/parts';
@@ -16,6 +17,7 @@ interface PartsSectionProps {
 }
 
 export default function PartsSection({ vehicleData }: PartsSectionProps) {
+  const router = useRouter();
   const [activeCategory, setActiveCategory] = useState('maintenance');
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const [searchQuery, setSearchQuery] = useState('');
@@ -25,6 +27,10 @@ export default function PartsSection({ vehicleData }: PartsSectionProps) {
 
   const handleAddToCart = (part: Part) => {
     setCartItems(prev => [...prev, part]);
+  };
+
+  const handleBackToHome = () => {
+    router.push('/');
   };
 
   return (
@@ -54,6 +60,7 @@ export default function PartsSection({ vehicleData }: PartsSectionProps) {
               categories={categories}
               activeCategory={activeCategory}
               onCategoryChange={setActiveCategory}
+              onBackToHome={handleBackToHome}
             />
           </div>
         </div>
