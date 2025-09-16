@@ -6,6 +6,7 @@ import PartsToolbar from './PartsToolbar';
 import PartsGrid from './PartsGrid';
 import PartsList from './PartsList';
 import CategoriesSidebar from './CategoriesSidebar';
+import MobileCategoriesSelector from './MobileCategoriesSelector';
 import MaintenanceSubsections from './MaintenanceSubsections';
 import MainFiltersSubsections from './MainFiltersSubsections';
 import ClutchSubsections from './ClutchSubsections';
@@ -219,7 +220,7 @@ export default function PartsContentArea({
       {/* Mobile Categories Selector */}
       {categories && activeCategory && onCategoryChange && (
         <div className="lg:hidden">
-          <CategoriesSidebar
+          <MobileCategoriesSelector
             categories={categories}
             activeCategory={activeCategory}
             onCategoryChange={onCategoryChange}

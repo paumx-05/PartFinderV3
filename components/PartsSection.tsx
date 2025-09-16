@@ -6,6 +6,7 @@ import CategoriesSidebar from './CategoriesSidebar';
 import PartsContentArea from './PartsContentArea';
 import { categories } from '@/lib/mocks/parts';
 import { ViewMode, Part } from '@/lib/types/parts';
+import { useCart } from '@/lib/contexts/CartContext';
 
 interface PartsSectionProps {
   vehicleData: {
@@ -21,12 +22,12 @@ export default function PartsSection({ vehicleData }: PartsSectionProps) {
   const [activeCategory, setActiveCategory] = useState('maintenance');
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const [searchQuery, setSearchQuery] = useState('');
-  const [cartItems, setCartItems] = useState<Part[]>([]);
+  const { state, addItem } = useCart();
 
   const currentCategory = categories.find(cat => cat.id === activeCategory);
 
   const handleAddToCart = (part: Part) => {
-    setCartItems(prev => [...prev, part]);
+    addItem(part);
   };
 
   const handleBackToHome = () => {
@@ -56,7 +57,7 @@ export default function PartsSection({ vehicleData }: PartsSectionProps) {
               onSearchQueryChange={setSearchQuery}
               vehicleData={vehicleData}
               onAddToCart={handleAddToCart}
-              cartItemsCount={cartItems.length}
+              cartItemsCount={state.totalItems}
               categories={categories}
               activeCategory={activeCategory}
               onCategoryChange={setActiveCategory}

@@ -1,6 +1,8 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { DM_Sans } from 'next/font/google';
+import { CartProvider } from '@/lib/contexts/CartContext';
+import { ClientProvider } from '@/lib/contexts/ClientContext';
 
 const dmSans = DM_Sans({ 
   subsets: ['latin'],
@@ -20,7 +22,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es">
-      <body className={`${dmSans.variable} font-sans bg-gray-900 text-gray-200`}>{children}</body>
+      <body className={`${dmSans.variable} font-sans bg-gray-900 text-gray-200`}>
+        <CartProvider>
+          <ClientProvider>
+            {children}
+          </ClientProvider>
+        </CartProvider>
+      </body>
     </html>
   );
 }

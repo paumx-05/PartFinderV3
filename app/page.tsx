@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useSessionMock } from '@/hooks/use-session-mock';
 import { authMock } from '@/lib/mocks/auth';
+import { useCart } from '@/lib/contexts/CartContext';
 import Header from '@/components/Header';
 
 // TODO: Integrar con API de TecDoc para búsqueda de recambios reales
@@ -61,8 +62,8 @@ const carBrands = [
 
 export default function Home(): JSX.Element {
   const [selectedBrand, setSelectedBrand] = useState<string>('');
-  const [cartItems, setCartItems] = useState<number>(0);
   const [showOfferBar, setShowOfferBar] = useState<boolean>(true);
+  const { state } = useCart();
   const [timeLeft, setTimeLeft] = useState<{hours: number, minutes: number, seconds: number}>({
     hours: 23,
     minutes: 59,
@@ -91,7 +92,7 @@ export default function Home(): JSX.Element {
   };
 
   const handleAddToCart = () => {
-    setCartItems(cartItems + 1);
+    // Esta función ya no es necesaria, el carrito se maneja globalmente
   };
 
   const handleUserClick = () => {
@@ -195,7 +196,7 @@ export default function Home(): JSX.Element {
         </div>
       )}
 
-      <Header cartItems={cartItems} onAddToCart={handleAddToCart} />
+      <Header cartItems={state.totalItems} onAddToCart={handleAddToCart} />
 
       {/* Main Content */}
       <div className="container mx-auto px-4 py-8">

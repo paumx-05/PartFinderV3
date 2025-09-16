@@ -3,6 +3,7 @@
 import React from 'react';
 import { Category, ViewMode } from '@/lib/types/parts';
 import { Search, Grid3X3, List, ShoppingCart } from 'lucide-react';
+import { useCart } from '@/lib/contexts/CartContext';
 
 interface PartsToolbarProps {
   category: Category;
@@ -30,6 +31,7 @@ export default function PartsToolbar({
   partsCount,
   cartItemsCount = 0
 }: PartsToolbarProps) {
+  const { toggleCart } = useCart();
   return (
     <div className="bg-gray-800 bg-opacity-70 rounded-lg p-4 border-l-4 border-red-600">
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
@@ -83,7 +85,10 @@ export default function PartsToolbar({
           </div>
 
           {/* Cart Button */}
-          <button className="flex items-center space-x-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors relative">
+          <button 
+            onClick={toggleCart}
+            className="flex items-center space-x-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors relative"
+          >
             <ShoppingCart className="w-4 h-4" />
             <span className="hidden sm:inline">Carrito ({cartItemsCount})</span>
             {cartItemsCount > 0 && (
