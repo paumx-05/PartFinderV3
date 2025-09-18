@@ -2,7 +2,10 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { DM_Sans } from 'next/font/google';
 import { CartProvider } from '@/lib/contexts/CartContext';
+import { BudgetProvider } from '@/lib/contexts/BudgetContext';
+import { PresupuestosProvider } from '@/lib/contexts/PresupuestosContext';
 import { ClientProvider } from '@/lib/contexts/ClientContext';
+import { ClientesProvider } from '@/lib/contexts/ClientesContext';
 
 const dmSans = DM_Sans({ 
   subsets: ['latin'],
@@ -24,9 +27,15 @@ export default function RootLayout({
     <html lang="es">
       <body className={`${dmSans.variable} font-sans bg-gray-900 text-gray-200`}>
         <CartProvider>
-          <ClientProvider>
-            {children}
-          </ClientProvider>
+          <BudgetProvider>
+            <PresupuestosProvider>
+              <ClientesProvider>
+                <ClientProvider>
+                  {children}
+                </ClientProvider>
+              </ClientesProvider>
+            </PresupuestosProvider>
+          </BudgetProvider>
         </CartProvider>
       </body>
     </html>
