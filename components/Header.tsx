@@ -7,7 +7,15 @@ import { Button } from '@/components/ui/button';
 import { useSessionMock } from '@/hooks/use-session-mock';
 import { authMock } from '@/lib/mocks/auth';
 import { useCart } from '@/lib/contexts/CartContext';
+import { useBudget } from '@/lib/contexts/BudgetContext';
 import CartModal from './cart/CartModal';
+import BudgetModal from './budget/BudgetModal';
+import { BudgetButton } from './budget/BudgetButton';
+import { PresupuestosDropdown } from './presupuestos/PresupuestosDropdown';
+import { ModalGestionPresupuestos } from './presupuestos/ModalGestionPresupuestos';
+import { ClientesDropdown } from './clientes/ClientesDropdown';
+import { ModalGestionClientes } from './clientes/ModalGestionClientes';
+import { ModalNuevoCliente } from './clientes/ModalNuevoCliente';
 
 interface HeaderProps {
   cartItems: number;
@@ -18,6 +26,10 @@ export default function Header({ cartItems, onAddToCart }: HeaderProps) {
   const router = useRouter();
   const { user, isAuthenticated, logout } = useSessionMock();
   const { state, toggleCart } = useCart();
+  const { state: budgetState, setBudgetOpen, initializeBudget } = useBudget();
+  const [isGestionPresupuestosOpen, setIsGestionPresupuestosOpen] = useState(false);
+  const [isGestionClientesOpen, setIsGestionClientesOpen] = useState(false);
+  const [isNuevoClienteOpen, setIsNuevoClienteOpen] = useState(false);
 
   async function handleLogout() {
     await authMock.logout();
@@ -32,6 +44,25 @@ export default function Header({ cartItems, onAddToCart }: HeaderProps) {
 
   const handleLogoClick = () => {
     router.push('/');
+  };
+
+  const handleAbrirGestionPresupuestos = () => {
+    setIsGestionPresupuestosOpen(true);
+  };
+
+  const handleAbrirNuevoPresupuesto = () => {
+    // Crear un presupuesto nuevo
+    initializeBudget();
+    // Abrir el BudgetModal
+    setBudgetOpen(true);
+  };
+
+  const handleAbrirGestionClientes = () => {
+    setIsGestionClientesOpen(true);
+  };
+
+  const handleAbrirNuevoCliente = () => {
+    setIsNuevoClienteOpen(true);
   };
 
   return (
@@ -56,6 +87,11 @@ export default function Header({ cartItems, onAddToCart }: HeaderProps) {
                 </span>
               )}
             </button>
+
+            <PresupuestosDropdown 
+              onAbrirGestion={handleAbrirGestionPresupuestos}
+              onAbrirNuevoPresupuesto={handleAbrirNuevoPresupuesto}
+            />
 
             <button onClick={handleUserClick} className="flex items-center hover:text-red-200 transition-colors p-1" aria-label={isAuthenticated ? 'Mi cuenta' : 'Login'}>
               <User className="h-5 w-5 sm:h-6 sm:w-6" />
@@ -106,6 +142,16 @@ export default function Header({ cartItems, onAddToCart }: HeaderProps) {
               )}
             </button>
 
+            <ClientesDropdown 
+              onAbrirGestion={handleAbrirGestionClientes}
+              onAbrirNuevoCliente={handleAbrirNuevoCliente}
+            />
+
+            <PresupuestosDropdown 
+              onAbrirGestion={handleAbrirGestionPresupuestos}
+              onAbrirNuevoPresupuesto={handleAbrirNuevoPresupuesto}
+            />
+
             <button onClick={handleUserClick} className="flex items-center space-x-1 hover:text-red-200 transition-colors p-1" aria-label={isAuthenticated ? 'Mi cuenta' : 'Login'}>
               <User className="h-5 w-5" />
             </button>
@@ -121,6 +167,29 @@ export default function Header({ cartItems, onAddToCart }: HeaderProps) {
       
       {/* Cart Modal */}
       <CartModal />
+      
+      {/* Budget Modal */}
+      <BudgetModal />
+      
+      {/* Modal de Gestión de Presupuestos */}
+      <ModalGestionPresupuestos 
+        isOpen={isGestionPresupuestosOpen}
+        onClose={() => setIsGestionPresupuestosOpen(false)}
+        onAbrirNuevoPresupuesto={handleAbrirNuevoPresupuesto}
+      />
+      
+
+      {/* Modal de Gestión de Clientes */}
+      <ModalGestionClientes 
+        isOpen={isGestionClientesOpen}
+        onClose={() => setIsGestionClientesOpen(false)}
+      />
+      
+      {/* Modal de Nuevo Cliente */}
+      <ModalNuevoCliente 
+        isOpen={isNuevoClienteOpen}
+        onClose={() => setIsNuevoClienteOpen(false)}
+      />
     </header>
   );
 }

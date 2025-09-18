@@ -3,6 +3,7 @@
 import React from 'react';
 import { Part } from '@/lib/types/parts';
 import { ShoppingCart, Star, Package } from 'lucide-react';
+import { BudgetButton } from './budget/BudgetButton';
 
 interface PartCardProps {
   part: Part;
@@ -64,25 +65,34 @@ export function PartCard({ part, onAddToCart }: PartCardProps) {
           </div>
         </div>
 
-        {/* Price and Add to Cart */}
-        <div className="flex items-center justify-between pt-2 min-w-0">
-          <div className="text-base sm:text-lg font-bold text-red-400 truncate min-w-0">
+        {/* Price and Actions */}
+        <div className="space-y-2 pt-2">
+          <div className="text-base sm:text-lg font-bold text-red-400">
             €{part.price.toFixed(2)}
           </div>
           
-          <button
-            onClick={handleAddToCart}
-            disabled={!part.inStock}
-            className={`flex items-center space-x-1 px-2 sm:px-3 py-1 rounded text-xs font-medium transition-colors flex-shrink-0 ${
-              part.inStock
-                ? 'bg-red-600 hover:bg-red-700 text-white'
-                : 'bg-gray-600 text-gray-400 cursor-not-allowed'
-            }`}
-          >
-            <ShoppingCart className="w-3 h-3 flex-shrink-0" />
-            <span className="hidden sm:inline truncate min-w-0">{part.inStock ? 'Añadir' : 'Agotado'}</span>
-            <span className="sm:hidden flex-shrink-0">{part.inStock ? '+' : '✕'}</span>
-          </button>
+          {/* Action Buttons */}
+          <div className="flex items-center space-x-2">
+            <button
+              onClick={handleAddToCart}
+              disabled={!part.inStock}
+              className={`flex items-center space-x-1 px-2 sm:px-3 py-1 rounded text-xs font-medium transition-colors flex-shrink-0 ${
+                part.inStock
+                  ? 'bg-red-600 hover:bg-red-700 text-white'
+                  : 'bg-gray-600 text-gray-400 cursor-not-allowed'
+              }`}
+            >
+              <ShoppingCart className="w-3 h-3 flex-shrink-0" />
+              <span className="hidden sm:inline truncate min-w-0">{part.inStock ? 'Carrito' : 'Agotado'}</span>
+              <span className="sm:hidden flex-shrink-0">{part.inStock ? '+' : '✕'}</span>
+            </button>
+            
+            <BudgetButton 
+              part={part} 
+              variant="compact"
+              className={!part.inStock ? 'opacity-50 cursor-not-allowed' : ''}
+            />
+          </div>
         </div>
       </div>
     </div>
