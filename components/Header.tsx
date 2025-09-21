@@ -2,13 +2,12 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Wrench, ShoppingCart, User, LogOut, Phone, Mail } from 'lucide-react';
+import { Wrench, User, LogOut, Phone, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useSessionMock } from '@/hooks/use-session-mock';
 import { authMock } from '@/lib/mocks/auth';
-import { useCart } from '@/lib/contexts/CartContext';
 import { useBudget } from '@/lib/contexts/BudgetContext';
-import CartModal from './cart/CartModal';
+import { useNotes } from '@/lib/contexts/NotesContext';
 import BudgetModal from './budget/BudgetModal';
 import { BudgetButton } from './budget/BudgetButton';
 import { PresupuestosDropdown } from './presupuestos/PresupuestosDropdown';
@@ -16,20 +15,21 @@ import { ModalGestionPresupuestos } from './presupuestos/ModalGestionPresupuesto
 import { ClientesDropdown } from './clientes/ClientesDropdown';
 import { ModalGestionClientes } from './clientes/ModalGestionClientes';
 import { ModalNuevoCliente } from './clientes/ModalNuevoCliente';
+import { NotesDropdown } from './notas/NotesDropdown';
+import { ModalNuevaNota } from './notas/ModalNuevaNota';
+import { ModalGestionNotas } from './notas/ModalGestionNotas';
 
-interface HeaderProps {
-  cartItems: number;
-  onAddToCart: () => void;
-}
+interface HeaderProps {}
 
-export default function Header({ cartItems, onAddToCart }: HeaderProps) {
+export default function Header({}: HeaderProps) {
   const router = useRouter();
   const { user, isAuthenticated, logout } = useSessionMock();
-  const { state, toggleCart } = useCart();
   const { state: budgetState, setBudgetOpen, initializeBudget } = useBudget();
   const [isGestionPresupuestosOpen, setIsGestionPresupuestosOpen] = useState(false);
   const [isGestionClientesOpen, setIsGestionClientesOpen] = useState(false);
   const [isNuevoClienteOpen, setIsNuevoClienteOpen] = useState(false);
+  const [isNuevaNotaOpen, setIsNuevaNotaOpen] = useState(false);
+  const [isGestionNotasOpen, setIsGestionNotasOpen] = useState(false);
 
   async function handleLogout() {
     await authMock.logout();
@@ -65,8 +65,16 @@ export default function Header({ cartItems, onAddToCart }: HeaderProps) {
     setIsNuevoClienteOpen(true);
   };
 
+  const handleAbrirNuevaNota = () => {
+    setIsNuevaNotaOpen(true);
+  };
+
+  const handleAbrirGestionNotas = () => {
+    setIsGestionNotasOpen(true);
+  };
+
   return (
-    <header className="bg-red-600 text-white shadow-lg">
+    <header className="sticky top-0 z-50 bg-red-600 text-white shadow-lg">
       <div className="container mx-auto px-2 sm:px-4 py-3 sm:py-4">
         <div className="flex items-center justify-between">
           <button 
@@ -79,18 +87,14 @@ export default function Header({ cartItems, onAddToCart }: HeaderProps) {
           </button>
 
           <div className="flex lg:hidden items-center gap-1 sm:gap-2">
-            <button onClick={onAddToCart} className="relative flex items-center hover:text-red-200 transition-colors p-1" aria-label="Carrito">
-              <ShoppingCart className="h-5 w-5 sm:h-6 sm:w-6" />
-              {cartItems > 0 && (
-                <span className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 bg-white text-red-600 text-xs rounded-full h-4 w-4 sm:h-5 sm:w-5 flex items-center justify-center font-bold">
-                  {cartItems}
-                </span>
-              )}
-            </button>
-
             <PresupuestosDropdown 
               onAbrirGestion={handleAbrirGestionPresupuestos}
               onAbrirNuevoPresupuesto={handleAbrirNuevoPresupuesto}
+            />
+
+            <NotesDropdown 
+              onAbrirNuevaNota={handleAbrirNuevaNota}
+              onAbrirGestionNotas={handleAbrirGestionNotas}
             />
 
             <button onClick={handleUserClick} className="flex items-center hover:text-red-200 transition-colors p-1" aria-label={isAuthenticated ? 'Mi cuenta' : 'Login'}>
@@ -133,15 +137,6 @@ export default function Header({ cartItems, onAddToCart }: HeaderProps) {
               </div>
             </div>
 
-            <button onClick={toggleCart} className="relative flex items-center space-x-1 hover:text-red-200 transition-colors p-1" aria-label="Carrito">
-              <ShoppingCart className="h-5 w-5" />
-              {state.totalItems > 0 && (
-                <span className="absolute -top-2 -right-2 bg-white text-red-600 text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
-                  {state.totalItems}
-                </span>
-              )}
-            </button>
-
             <ClientesDropdown 
               onAbrirGestion={handleAbrirGestionClientes}
               onAbrirNuevoCliente={handleAbrirNuevoCliente}
@@ -150,6 +145,11 @@ export default function Header({ cartItems, onAddToCart }: HeaderProps) {
             <PresupuestosDropdown 
               onAbrirGestion={handleAbrirGestionPresupuestos}
               onAbrirNuevoPresupuesto={handleAbrirNuevoPresupuesto}
+            />
+
+            <NotesDropdown 
+              onAbrirNuevaNota={handleAbrirNuevaNota}
+              onAbrirGestionNotas={handleAbrirGestionNotas}
             />
 
             <button onClick={handleUserClick} className="flex items-center space-x-1 hover:text-red-200 transition-colors p-1" aria-label={isAuthenticated ? 'Mi cuenta' : 'Login'}>
@@ -164,9 +164,6 @@ export default function Header({ cartItems, onAddToCart }: HeaderProps) {
           </div>
         </div>
       </div>
-      
-      {/* Cart Modal */}
-      <CartModal />
       
       {/* Budget Modal */}
       <BudgetModal />
@@ -189,6 +186,18 @@ export default function Header({ cartItems, onAddToCart }: HeaderProps) {
       <ModalNuevoCliente 
         isOpen={isNuevoClienteOpen}
         onClose={() => setIsNuevoClienteOpen(false)}
+      />
+
+      {/* Modal de Nueva Nota */}
+      <ModalNuevaNota 
+        isOpen={isNuevaNotaOpen}
+        onClose={() => setIsNuevaNotaOpen(false)}
+      />
+
+      {/* Modal de Gestión de Notas */}
+      <ModalGestionNotas 
+        isOpen={isGestionNotasOpen}
+        onClose={() => setIsGestionNotasOpen(false)}
       />
     </header>
   );

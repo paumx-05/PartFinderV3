@@ -29,7 +29,7 @@ export default function PipesClampsSubSubsections({
   onBackToSubcategory
 }: PipesClampsSubSubsectionsProps) {
   const [activeSubSubcategory, setActiveSubSubcategory] = useState('water-pipes');
-  const [viewMode, setViewMode] = useState<ViewMode>('grid');
+  const [viewMode, setViewMode] = useState<ViewMode>('list');
   const [searchQuery, setSearchQuery] = useState('');
   const [brandFilter, setBrandFilter] = useState('');
   const [materialFilter, setMaterialFilter] = useState('');

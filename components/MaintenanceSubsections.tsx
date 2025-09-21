@@ -50,7 +50,7 @@ export default function MaintenanceSubsections({
   onCategoryChange
 }: MaintenanceSubsectionsProps) {
   const [activeSubcategory, setActiveSubcategory] = useState('oils');
-  const [viewMode, setViewMode] = useState<ViewMode>('grid');
+  const [viewMode, setViewMode] = useState<ViewMode>('list');
   const [searchQuery, setSearchQuery] = useState('');
   const [showSubSubsections, setShowSubSubsections] = useState(false);
   const [activeOilType, setActiveOilType] = useState('engine-oil');

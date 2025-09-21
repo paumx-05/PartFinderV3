@@ -30,6 +30,19 @@ export function BudgetForm({ budget, onClientInfoChange, onAbrirGestionClientes,
   const [isClientePanelCollapsed, setIsClientePanelCollapsed] = useState(false);
   const [isDatosPresupuestoCollapsed, setIsDatosPresupuestoCollapsed] = useState(false);
 
+  // Auto-replegar cuando los datos estén completos
+  useEffect(() => {
+    const isFormValid = clientName.trim() !== '' && licensePlate.trim() !== '' && numeroCliente.trim() !== '';
+    
+    if (isFormValid) {
+      // Datos completos: replegar automáticamente
+      setIsDatosPresupuestoCollapsed(true);
+    } else if (!clientName && !licensePlate && !numeroCliente) {
+      // Formulario vacío: expandir automáticamente
+      setIsDatosPresupuestoCollapsed(false);
+    }
+  }, [clientName, licensePlate, numeroCliente]);
+
   // Cargar datos existentes cuando el presupuesto cambie
   useEffect(() => {
     if (budget) {
@@ -117,17 +130,34 @@ export function BudgetForm({ budget, onClientInfoChange, onAbrirGestionClientes,
           className="flex items-center justify-between p-3 sm:p-4 cursor-pointer hover:bg-gray-750 transition-colors"
           onClick={() => setIsDatosPresupuestoCollapsed(!isDatosPresupuestoCollapsed)}
         >
-          <div className="flex items-center gap-2 sm:gap-3">
-            <Car className="w-4 h-4 sm:w-5 sm:h-5 text-red-400" />
-            <h3 className="text-base sm:text-lg font-semibold text-white">
-              Datos del Presupuesto
-            </h3>
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+            <Car className="w-4 h-4 sm:w-5 sm:h-5 text-red-400 flex-shrink-0" />
+            <div className="min-w-0 flex-1">
+              <h3 className="text-base sm:text-lg font-semibold text-white">
+                Datos del Presupuesto
+              </h3>
+              {isDatosPresupuestoCollapsed && (clientName || licensePlate || numeroCliente) && (
+                <div className="text-xs text-gray-400 truncate mt-1">
+                  {clientName && `${clientName}`}
+                  {licensePlate && ` • ${licensePlate}`}
+                  {numeroCliente && ` • #${numeroCliente}`}
+                </div>
+              )}
+            </div>
           </div>
-          {isDatosPresupuestoCollapsed ? (
-            <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" />
-          ) : (
-            <ChevronUp className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" />
-          )}
+          <div className="flex items-center gap-2 flex-shrink-0">
+            {isDatosPresupuestoCollapsed && clientName && licensePlate && numeroCliente && (
+              <div className="flex items-center gap-1">
+                <div className="w-2 h-2 rounded-full bg-green-400"></div>
+                <span className="text-xs text-green-400 hidden sm:inline">Completo</span>
+              </div>
+            )}
+            {isDatosPresupuestoCollapsed ? (
+              <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" />
+            ) : (
+              <ChevronUp className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" />
+            )}
+          </div>
         </div>
         
         {/* Contenido desplegable */}
@@ -150,19 +180,19 @@ export function BudgetForm({ budget, onClientInfoChange, onAbrirGestionClientes,
                 
                 {/* Resultados de búsqueda */}
                 {showSearchResults && clientesEncontrados.length > 0 && (
-                  <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-10 max-h-48 sm:max-h-60 overflow-y-auto">
+                  <div className="absolute top-full left-0 right-0 mt-1 bg-gray-700 border border-gray-600 rounded-lg shadow-lg z-10 max-h-48 sm:max-h-60 overflow-y-auto scrollbar-dark">
                     {clientesEncontrados.map((cliente) => (
                       <div
                         key={cliente.numeroCliente}
                         onClick={() => handleClienteSeleccionado(cliente)}
-                        className="p-2 sm:p-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0"
+                        className="p-2 sm:p-3 hover:bg-gray-600 cursor-pointer border-b border-gray-600 last:border-b-0"
                       >
                         <div className="flex items-center justify-between">
                           <div className="min-w-0 flex-1">
-                            <div className="font-medium text-gray-900 text-sm sm:text-base truncate">
+                            <div className="font-medium text-white text-sm sm:text-base truncate">
                               {cliente.nombre}
                             </div>
-                            <div className="text-xs sm:text-sm text-gray-500 truncate">
+                            <div className="text-xs sm:text-sm text-gray-300 truncate">
                               #{cliente.numeroCliente} • {cliente.telefono} • {cliente.poblacion}
                             </div>
                           </div>
@@ -245,7 +275,7 @@ export function BudgetForm({ budget, onClientInfoChange, onAbrirGestionClientes,
               </div>
             )}
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
               {/* Número de cliente */}
               <div className="space-y-2">
                 <Label htmlFor="numeroCliente" className="text-gray-300">Número de Cliente *</Label>

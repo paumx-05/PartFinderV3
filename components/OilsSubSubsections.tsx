@@ -33,7 +33,7 @@ export default function OilsSubSubsections({
   onBackToHome
 }: OilsSubSubsectionsProps) {
   const [activeSubSubcategory, setActiveSubSubcategory] = useState('engine-oil');
-  const [viewMode, setViewMode] = useState<ViewMode>('grid');
+  const [viewMode, setViewMode] = useState<ViewMode>('list');
   const [searchQuery, setSearchQuery] = useState('');
   const [viscosityFilter, setViscosityFilter] = useState('');
   const [typeFilter, setTypeFilter] = useState('');

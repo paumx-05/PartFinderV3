@@ -34,7 +34,7 @@ export default function AirSystemSubSubsections({
   onCategoryChange
 }: AirSystemSubSubsectionsProps) {
   const [activeSubSubcategory, setActiveSubSubcategory] = useState('air-filter');
-  const [viewMode, setViewMode] = useState<ViewMode>('grid');
+  const [viewMode, setViewMode] = useState<ViewMode>('list');
   const [searchQuery, setSearchQuery] = useState('');
   const [brandFilter, setBrandFilter] = useState('');
   const [materialFilter, setMaterialFilter] = useState('');

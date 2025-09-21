@@ -4,7 +4,6 @@ import VehicleInfo from '@/components/VehicleInfo';
 import PartsSection from '@/components/PartsSection';
 import { useRouter } from 'next/navigation';
 import Header from '@/components/Header';
-import { useCart } from '@/lib/contexts/CartContext';
 
 interface VehicleData {
   licensePlate: string;
@@ -22,7 +21,6 @@ export default function VehiclePageClient({ licensePlate }: VehiclePageClientPro
   const router = useRouter();
   const [plate, setPlate] = useState(licensePlate.toUpperCase());
   const [vehicleData, setVehicleData] = useState<VehicleData | null>(null);
-  const { state } = useCart();
 
   useEffect(() => {
     // Normalizar la matrícula para comparación (convertir a mayúsculas)
@@ -63,7 +61,7 @@ export default function VehiclePageClient({ licensePlate }: VehiclePageClientPro
 
   return (
     <>
-      <Header cartItems={state.totalItems} onAddToCart={() => {}} />
+      <Header />
       {vehicleData && (
         <VehicleInfo
           vehicleData={vehicleData}

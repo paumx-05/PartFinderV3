@@ -33,7 +33,7 @@ export default function SuspensionAxlesSubSubsections({
   onCategoryChange
 }: SuspensionAxlesSubSubsectionsProps) {
   const [activeSubSubcategory, setActiveSubSubcategory] = useState('shock-absorbers');
-  const [viewMode, setViewMode] = useState<ViewMode>('grid');
+  const [viewMode, setViewMode] = useState<ViewMode>('list');
   const [searchQuery, setSearchQuery] = useState('');
   const [brandFilter, setBrandFilter] = useState('');
   const [materialFilter, setMaterialFilter] = useState('');

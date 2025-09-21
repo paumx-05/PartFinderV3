@@ -37,7 +37,7 @@ export default function SteeringSubSubsections({
   onCategoryChange
 }: SteeringSubSubsectionsProps) {
   const [activeSubSubcategory, setActiveSubSubcategory] = useState('steering-ball-joints');
-  const [viewMode, setViewMode] = useState<ViewMode>('grid');
+  const [viewMode, setViewMode] = useState<ViewMode>('list');
   const [searchQuery, setSearchQuery] = useState('');
   const [brandFilter, setBrandFilter] = useState('');
   const [materialFilter, setMaterialFilter] = useState('');

@@ -29,7 +29,7 @@ export default function ClutchActuationSubSubsections({
   onBackToSubcategory
 }: ClutchActuationSubSubsectionsProps) {
   const [activeSubSubcategory, setActiveSubSubcategory] = useState('clutch-pump');
-  const [viewMode, setViewMode] = useState<ViewMode>('grid');
+  const [viewMode, setViewMode] = useState<ViewMode>('list');
   const [searchQuery, setSearchQuery] = useState('');
   const [brandFilter, setBrandFilter] = useState('');
   const [typeFilter, setTypeFilter] = useState('');

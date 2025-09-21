@@ -37,7 +37,7 @@ export default function CoolingSubSubsections({
   onCategoryChange
 }: CoolingSubSubsectionsProps) {
   const [activeSubSubcategory, setActiveSubSubcategory] = useState('water-pump');
-  const [viewMode, setViewMode] = useState<ViewMode>('grid');
+  const [viewMode, setViewMode] = useState<ViewMode>('list');
   const [searchQuery, setSearchQuery] = useState('');
   const [brandFilter, setBrandFilter] = useState('');
   const [materialFilter, setMaterialFilter] = useState('');

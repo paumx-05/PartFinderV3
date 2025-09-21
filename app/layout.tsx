@@ -6,6 +6,7 @@ import { BudgetProvider } from '@/lib/contexts/BudgetContext';
 import { PresupuestosProvider } from '@/lib/contexts/PresupuestosContext';
 import { ClientProvider } from '@/lib/contexts/ClientContext';
 import { ClientesProvider } from '@/lib/contexts/ClientesContext';
+import { NotesProvider } from '@/lib/contexts/NotesContext';
 
 const dmSans = DM_Sans({ 
   subsets: ['latin'],
@@ -31,7 +32,9 @@ export default function RootLayout({
             <PresupuestosProvider>
               <ClientesProvider>
                 <ClientProvider>
-                  {children}
+                  <NotesProvider>
+                    {children}
+                  </NotesProvider>
                 </ClientProvider>
               </ClientesProvider>
             </PresupuestosProvider>

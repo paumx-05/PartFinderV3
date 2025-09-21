@@ -33,7 +33,7 @@ export default function FuelSystemSubSubsections({
   onCategoryChange
 }: FuelSystemSubSubsectionsProps) {
   const [activeSubSubcategory, setActiveSubSubcategory] = useState('fuel-filter');
-  const [viewMode, setViewMode] = useState<ViewMode>('grid');
+  const [viewMode, setViewMode] = useState<ViewMode>('list');
   const [searchQuery, setSearchQuery] = useState('');
   const [brandFilter, setBrandFilter] = useState('');
   const [materialFilter, setMaterialFilter] = useState('');
