@@ -1,6 +1,8 @@
 // components/VehicleInfo.tsx
 'use client';
 import React from 'react';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/hooks/use-auth';
 import ClientSearch from './ClientSearch';
 
 interface VehicleInfoProps {
@@ -16,6 +18,18 @@ interface VehicleInfoProps {
 }
 
 export default function VehicleInfo({ vehicleData, plate, onPlateChange, onSearch }: VehicleInfoProps) {
+  const router = useRouter();
+  const { isAuthenticated } = useAuth();
+
+  const handleSearch = () => {
+    // Verificar si hay sesión iniciada
+    if (!isAuthenticated) {
+      router.push('/login');
+      return;
+    }
+    onSearch(plate);
+  };
+
   return (
     <header className="bg-gradient-to-r from-gray-800 to-gray-900 p-3 sm:p-6 shadow-md border-b-4 border-red-600">
       <div className="space-y-4">
@@ -35,22 +49,24 @@ export default function VehicleInfo({ vehicleData, plate, onPlateChange, onSearc
               className="p-2 sm:p-3 bg-gray-800 border border-gray-600 rounded text-gray-200 flex-1 text-sm sm:text-base"
               value={plate}
               onChange={(e) => onPlateChange(e.target.value)}
-              onKeyDown={(e) => { if (e.key === 'Enter') onSearch(plate); }}
+              onKeyDown={(e) => { if (e.key === 'Enter') handleSearch(); }}
               placeholder="Matrícula"
             />
             <button
               className="bg-red-600 hover:bg-red-700 text-white px-3 sm:px-4 py-2 rounded text-sm sm:text-base whitespace-nowrap"
-              onClick={() => onSearch(plate)}
+              onClick={handleSearch}
             >
               Buscar
             </button>
           </div>
         </div>
         
-        {/* Client Search Section */}
-        <div className="mt-4">
-          <ClientSearch />
-        </div>
+        {/* Client Search Section - Solo visible con sesión */}
+        {isAuthenticated && (
+          <div className="mt-4">
+            <ClientSearch />
+          </div>
+        )}
       </div>
     </header>
   );

@@ -76,6 +76,12 @@ export default function Home(): JSX.Element {
   const { user, isAuthenticated, logout } = useSessionMock();
 
   const handleSearch = () => {
+    // Verificar si hay sesión iniciada
+    if (!isAuthenticated) {
+      router.push('/login');
+      return;
+    }
+
     const plate = searchForm.licensePlate.toUpperCase();
     const plateRegex = /^[0-9]{4}[A-Z]{3}$/;
     if (!plateRegex.test(plate)) {

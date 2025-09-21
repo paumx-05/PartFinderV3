@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import VehicleInfo from '@/components/VehicleInfo';
 import PartsSection from '@/components/PartsSection';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/hooks/use-auth';
 import Header from '@/components/Header';
 
 interface VehicleData {
@@ -19,8 +20,17 @@ interface VehiclePageClientProps {
 
 export default function VehiclePageClient({ licensePlate }: VehiclePageClientProps) {
   const router = useRouter();
+  const { isAuthenticated } = useAuth();
   const [plate, setPlate] = useState(licensePlate.toUpperCase());
   const [vehicleData, setVehicleData] = useState<VehicleData | null>(null);
+
+  // Verificar sesión al cargar la página
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push('/login');
+      return;
+    }
+  }, [isAuthenticated, router]);
 
   useEffect(() => {
     // Normalizar la matrícula para comparación (convertir a mayúsculas)
@@ -58,6 +68,11 @@ export default function VehiclePageClient({ licensePlate }: VehiclePageClientPro
     const p = plate.toUpperCase();
     router.push(`/vehicle/${p}`);
   };
+
+  // No renderizar nada si no hay sesión
+  if (!isAuthenticated) {
+    return null;
+  }
 
   return (
     <>
