@@ -29,7 +29,7 @@ export default function BrakeDrumSubSubsections({
   onBackToSubcategory
 }: BrakeDrumSubSubsectionsProps) {
   const [activeSubSubcategory, setActiveSubSubcategory] = useState('brake-kits');
-  const [viewMode, setViewMode] = useState<ViewMode>('grid');
+  const [viewMode, setViewMode] = useState<ViewMode>('list');
   const [searchQuery, setSearchQuery] = useState('');
   const [brandFilter, setBrandFilter] = useState('');
   const [materialFilter, setMaterialFilter] = useState('');

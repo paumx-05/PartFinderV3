@@ -33,7 +33,7 @@ export default function BeltSubSubsections({
   onBackToHome
 }: BeltSubSubsectionsProps) {
   const [activeSubSubcategory, setActiveSubSubcategory] = useState('belts');
-  const [viewMode, setViewMode] = useState<ViewMode>('grid');
+  const [viewMode, setViewMode] = useState<ViewMode>('list');
   const [searchQuery, setSearchQuery] = useState('');
   const [typeFilter, setTypeFilter] = useState('');
   const [brandFilter, setBrandFilter] = useState('');

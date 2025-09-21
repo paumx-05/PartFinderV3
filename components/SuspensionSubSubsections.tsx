@@ -33,7 +33,7 @@ export default function SuspensionSubSubsections({
   onBackToHome
 }: SuspensionSubSubsectionsProps) {
   const [activeSubSubcategory, setActiveSubSubcategory] = useState('steering-joint');
-  const [viewMode, setViewMode] = useState<ViewMode>('grid');
+  const [viewMode, setViewMode] = useState<ViewMode>('list');
   const [searchQuery, setSearchQuery] = useState('');
   const [typeFilter, setTypeFilter] = useState('');
   const [materialFilter, setMaterialFilter] = useState('');

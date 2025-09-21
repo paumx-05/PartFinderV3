@@ -33,7 +33,7 @@ export default function WipersSubSubsections({
   onBackToHome
 }: WipersSubSubsectionsProps) {
   const [activeSubSubcategory, setActiveSubSubcategory] = useState('washer-fluids');
-  const [viewMode, setViewMode] = useState<ViewMode>('grid');
+  const [viewMode, setViewMode] = useState<ViewMode>('list');
   const [searchQuery, setSearchQuery] = useState('');
   const [typeFilter, setTypeFilter] = useState('');
   const [brandFilter, setBrandFilter] = useState('');

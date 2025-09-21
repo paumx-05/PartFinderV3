@@ -84,7 +84,7 @@ export default function BrakesSubSubsections({
   onCategoryChange
 }: BrakesSubSubsectionsProps) {
   const [activeSubSubcategory, setActiveSubSubcategory] = useState('brake-disc');
-  const [viewMode, setViewMode] = useState<ViewMode>('grid');
+  const [viewMode, setViewMode] = useState<ViewMode>('list');
   const [searchQuery, setSearchQuery] = useState('');
   const [brandFilter, setBrandFilter] = useState('');
   const [materialFilter, setMaterialFilter] = useState('');

@@ -89,3 +89,64 @@
     overflow: hidden;
   }
 }
+
+/* Estilos personalizados para scrollbars */
+@layer base {
+  /* Webkit browsers (Chrome, Safari, Edge) */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  /* Mobile optimization - thinner scrollbars */
+  @media (max-width: 640px) {
+    ::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: rgb(31, 41, 55); /* gray-800 */
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: rgb(55, 65, 81); /* gray-700 */
+    border-radius: 4px;
+    border: 1px solid rgb(31, 41, 55); /* gray-800 */
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(75, 85, 99); /* gray-600 */
+  }
+  
+  ::-webkit-scrollbar-corner {
+    background: rgb(31, 41, 55); /* gray-800 */
+  }
+  
+  /* Firefox */
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(55, 65, 81) rgb(31, 41, 55); /* thumb track */
+  }
+  
+  /* Scrollbars específicos para áreas con fondo diferente */
+  .scrollbar-dark {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(75, 85, 99) rgb(55, 65, 81);
+  }
+  
+  .scrollbar-dark::-webkit-scrollbar-track {
+    background: rgb(55, 65, 81); /* gray-700 */
+  }
+  
+  .scrollbar-dark::-webkit-scrollbar-thumb {
+    background: rgb(75, 85, 99); /* gray-600 */
+    border: 1px solid rgb(55, 65, 81); /* gray-700 */
+  }
+  
+  .scrollbar-dark::-webkit-scrollbar-thumb:hover {
+    background: rgb(107, 114, 128); /* gray-500 */
+  }
+}

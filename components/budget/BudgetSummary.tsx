@@ -52,131 +52,127 @@ export function BudgetSummary({ budget, onSave, onClear, onNuevoPresupuesto }: B
   };
 
   return (
-    <div className="space-y-6">
-      {/* Información del cliente */}
-      <div className="bg-gray-800 rounded-lg p-4">
-        <h3 className="text-lg font-semibold text-white mb-4 flex items-center">
-          <FileText className="w-5 h-5 mr-2" />
-          Resumen del Presupuesto
+    <div className="space-y-4">
+      {/* Información compacta del cliente y productos */}
+      <div className="bg-gray-800 rounded-lg p-3">
+        <h3 className="text-sm font-semibold text-white mb-3 flex items-center">
+          <FileText className="w-4 h-4 mr-2" />
+          Resumen
         </h3>
         
-        <div className="space-y-3">
-          <div className="flex items-center space-x-3">
-            <User className="w-4 h-4 text-gray-400" />
-            <div>
+        {/* Cliente y matrícula en una línea */}
+        <div className="grid grid-cols-2 gap-2 mb-3">
+          <div className="flex items-center space-x-2">
+            <User className="w-3 h-3 text-gray-400 flex-shrink-0" />
+            <div className="min-w-0">
               <p className="text-xs text-gray-400">Cliente</p>
-              <p className="text-white font-medium">
+              <p className="text-sm text-white font-medium truncate">
                 {budget.clientName || 'Sin especificar'}
               </p>
             </div>
           </div>
           
-          <div className="flex items-center space-x-3">
-            <Car className="w-4 h-4 text-gray-400" />
-            <div>
+          <div className="flex items-center space-x-2">
+            <Car className="w-3 h-3 text-gray-400 flex-shrink-0" />
+            <div className="min-w-0">
               <p className="text-xs text-gray-400">Matrícula</p>
-              <p className="text-white font-medium">
+              <p className="text-sm text-white font-medium truncate">
                 {budget.licensePlate || 'Sin especificar'}
               </p>
             </div>
           </div>
-          
-          {budget.numeroCliente && (
-            <div className="flex items-center space-x-3">
-              <Hash className="w-4 h-4 text-gray-400" />
-              <div>
-                <p className="text-xs text-gray-400">Cliente #</p>
-                <p className="text-white font-medium font-mono">{budget.numeroCliente}</p>
-              </div>
-            </div>
-          )}
-          
-          {budget.orderNumber && (
-            <div className="flex items-center space-x-3">
-              <Hash className="w-4 h-4 text-gray-400" />
-              <div>
-                <p className="text-xs text-gray-400">Pedido</p>
-                <p className="text-white font-medium">{budget.orderNumber}</p>
-              </div>
-            </div>
-          )}
         </div>
-      </div>
 
-      {/* Resumen de productos */}
-      <div className="bg-gray-800 rounded-lg p-4">
-        <div className="flex items-center space-x-3 mb-4">
-          <Package className="w-5 h-5 text-gray-400" />
-          <h3 className="text-lg font-semibold text-white">Productos</h3>
-        </div>
+        {/* Números de cliente y pedido (si existen) */}
+        {(budget.numeroCliente || budget.orderNumber) && (
+          <div className="grid grid-cols-2 gap-2 mb-3">
+            {budget.numeroCliente && (
+              <div className="flex items-center space-x-2">
+                <Hash className="w-3 h-3 text-gray-400 flex-shrink-0" />
+                <div className="min-w-0">
+                  <p className="text-xs text-gray-400">Cliente #</p>
+                  <p className="text-sm text-white font-medium font-mono truncate">{budget.numeroCliente}</p>
+                </div>
+              </div>
+            )}
+            
+            {budget.orderNumber && (
+              <div className="flex items-center space-x-2">
+                <Hash className="w-3 h-3 text-gray-400 flex-shrink-0" />
+                <div className="min-w-0">
+                  <p className="text-xs text-gray-400">Pedido</p>
+                  <p className="text-sm text-white font-medium truncate">{budget.orderNumber}</p>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
         
-        <div className="space-y-2">
-          <div className="flex justify-between text-sm">
-            <span className="text-gray-400">Total productos:</span>
-            <span className="text-white font-medium">{budget.totalItems}</span>
-          </div>
-          
-          <div className="flex justify-between text-sm">
-            <span className="text-gray-400">Artículos únicos:</span>
-            <span className="text-white font-medium">{budget.items.length}</span>
-          </div>
-          
-          <div className="border-t border-gray-700 pt-2 mt-3">
-            <div className="flex justify-between items-center">
-              <span className="text-lg font-semibold text-white">Total:</span>
-              <span className="text-xl font-bold text-red-400 flex items-center">
-                <Euro className="w-5 h-5 mr-1" />
-                {budget.totalPrice.toFixed(2)}
-              </span>
+        {/* Resumen de productos compacto */}
+        <div className="border-t border-gray-700 pt-2">
+          <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center space-x-2">
+              <Package className="w-4 h-4 text-gray-400" />
+              <span className="text-sm text-gray-400">{budget.totalItems} productos ({budget.items.length} únicos)</span>
             </div>
+          </div>
+          
+          <div className="flex justify-between items-center">
+            <span className="text-sm font-semibold text-white">Total:</span>
+            <span className="text-lg font-bold text-red-400 flex items-center">
+              <Euro className="w-4 h-4 mr-1" />
+              {budget.totalPrice.toFixed(2)}
+            </span>
           </div>
         </div>
       </div>
 
-      {/* Botones de acción */}
-      <div className="space-y-3">
+      {/* Botones de acción compactos */}
+      <div className="space-y-2">
         <button
           onClick={handleSave}
           disabled={!isFormValid || !hasItems}
-          className={`w-full py-3 px-4 rounded-lg font-medium transition-colors ${
+          className={`w-full py-2 px-3 rounded-lg text-sm font-medium transition-colors ${
             isFormValid && hasItems
               ? 'bg-green-600 hover:bg-green-700 text-white'
               : 'bg-gray-600 text-gray-400 cursor-not-allowed'
           }`}
         >
-          <Save className="w-4 h-4 inline mr-2" />
+          <Save className="w-3 h-3 inline mr-2" />
           Guardar Presupuesto
         </button>
         
-        {onNuevoPresupuesto && (
+        <div className="grid grid-cols-2 gap-2">
+          {onNuevoPresupuesto && (
+            <button
+              onClick={onNuevoPresupuesto}
+              className="py-2 px-3 rounded-lg text-sm font-medium bg-blue-600 hover:bg-blue-700 text-white transition-colors"
+            >
+              <Plus className="w-3 h-3 inline mr-1" />
+              Nuevo
+            </button>
+          )}
+          
           <button
-            onClick={onNuevoPresupuesto}
-            className="w-full py-2 px-4 rounded-lg font-medium bg-blue-600 hover:bg-blue-700 text-white transition-colors"
+            onClick={handleClear}
+            className="py-2 px-3 rounded-lg text-sm font-medium bg-red-600 hover:bg-red-700 text-white transition-colors"
           >
-            <Plus className="w-4 h-4 inline mr-2" />
-            Crear Nuevo Presupuesto
+            Limpiar
           </button>
-        )}
-        
-        <button
-          onClick={handleClear}
-          className="w-full py-2 px-4 rounded-lg font-medium bg-red-600 hover:bg-red-700 text-white transition-colors"
-        >
-          Limpiar Presupuesto
-        </button>
+        </div>
       </div>
 
-      {/* Estado del presupuesto */}
-      <div className="bg-gray-800 rounded-lg p-3">
+      {/* Estado del presupuesto compacto */}
+      <div className="bg-gray-800 rounded-lg p-2">
         <div className="flex items-center space-x-2">
-          <div className={`w-2 h-2 rounded-full ${
+          <div className={`w-2 h-2 rounded-full flex-shrink-0 ${
             isFormValid && hasItems ? 'bg-green-400' : 
             hasItems ? 'bg-yellow-400' : 'bg-red-400'
           }`}></div>
-          <span className="text-sm text-gray-300">
-            {isFormValid && hasItems ? 'Presupuesto listo para guardar' :
-             hasItems ? 'Complete la información del cliente (incluyendo número de cliente)' :
-             'Agregue productos al presupuesto'}
+          <span className="text-xs text-gray-300 leading-tight">
+            {isFormValid && hasItems ? 'Listo para guardar' :
+             hasItems ? 'Complete información del cliente' :
+             'Agregue productos'}
           </span>
         </div>
       </div>

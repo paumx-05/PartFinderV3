@@ -33,7 +33,7 @@ export default function ExhaustSubSubsections({
   onCategoryChange
 }: ExhaustSubSubsectionsProps) {
   const [activeSubSubcategory, setActiveSubSubcategory] = useState('catalyst');
-  const [viewMode, setViewMode] = useState<ViewMode>('grid');
+  const [viewMode, setViewMode] = useState<ViewMode>('list');
   const [searchQuery, setSearchQuery] = useState('');
   const [brandFilter, setBrandFilter] = useState('');
   const [materialFilter, setMaterialFilter] = useState('');

@@ -33,7 +33,7 @@ export default function BeltTransmissionSubSubsections({
   onCategoryChange
 }: BeltTransmissionSubSubsectionsProps) {
   const [activeSubSubcategory, setActiveSubSubcategory] = useState('timing-belt-kit');
-  const [viewMode, setViewMode] = useState<ViewMode>('grid');
+  const [viewMode, setViewMode] = useState<ViewMode>('list');
   const [searchQuery, setSearchQuery] = useState('');
   const [brandFilter, setBrandFilter] = useState('');
   const [materialFilter, setMaterialFilter] = useState('');

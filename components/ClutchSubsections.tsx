@@ -34,7 +34,7 @@ export default function ClutchSubsections({
   onCategoryChange
 }: ClutchSubsectionsProps) {
   const [activeSubSubcategory, setActiveSubSubcategory] = useState('clutch-kit');
-  const [viewMode, setViewMode] = useState<ViewMode>('grid');
+  const [viewMode, setViewMode] = useState<ViewMode>('list');
   const [searchQuery, setSearchQuery] = useState('');
   const [brandFilter, setBrandFilter] = useState('');
   const [typeFilter, setTypeFilter] = useState('');

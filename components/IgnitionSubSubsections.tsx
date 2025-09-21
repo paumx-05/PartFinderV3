@@ -33,7 +33,7 @@ export default function IgnitionSubSubsections({
   onBackToHome
 }: IgnitionSubSubsectionsProps) {
   const [activeSubSubcategory, setActiveSubSubcategory] = useState('battery');
-  const [viewMode, setViewMode] = useState<ViewMode>('grid');
+  const [viewMode, setViewMode] = useState<ViewMode>('list');
   const [searchQuery, setSearchQuery] = useState('');
   const [technologyFilter, setTechnologyFilter] = useState('');
   const [typeFilter, setTypeFilter] = useState('');

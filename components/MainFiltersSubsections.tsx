@@ -33,7 +33,7 @@ export default function MainFiltersSubsections({
   onCategoryChange
 }: MainFiltersSubsectionsProps) {
   const [activeSubSubcategory, setActiveSubSubcategory] = useState('oil-filter');
-  const [viewMode, setViewMode] = useState<ViewMode>('grid');
+  const [viewMode, setViewMode] = useState<ViewMode>('list');
   const [searchQuery, setSearchQuery] = useState('');
   const [brandFilter, setBrandFilter] = useState('');
   const [compatibilityFilter, setCompatibilityFilter] = useState('');
