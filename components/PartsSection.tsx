@@ -6,7 +6,7 @@ import CategoriesSidebar from './CategoriesSidebar';
 import PartsContentArea from './PartsContentArea';
 import { categories } from '@/lib/mocks/parts';
 import { ViewMode, Part } from '@/lib/types/parts';
-import { useCart } from '@/lib/contexts/CartContext';
+
 
 interface PartsSectionProps {
   vehicleData: {
@@ -22,12 +22,11 @@ export default function PartsSection({ vehicleData }: PartsSectionProps) {
   const [activeCategory, setActiveCategory] = useState('maintenance');
   const [viewMode, setViewMode] = useState<ViewMode>('list');
   const [searchQuery, setSearchQuery] = useState('');
-  const { state, addItem } = useCart();
-
   const currentCategory = categories.find(cat => cat.id === activeCategory);
 
   const handleAddToCart = (part: Part) => {
-    addItem(part);
+    // Función vacía ya que el carrito fue eliminado
+    console.log('Add to cart functionality removed');
   };
 
   const handleBackToHome = () => {
@@ -62,7 +61,7 @@ export default function PartsSection({ vehicleData }: PartsSectionProps) {
                 onSearchQueryChange={setSearchQuery}
                 vehicleData={vehicleData}
                 onAddToCart={handleAddToCart}
-                cartItemsCount={state.totalItems}
+                cartItemsCount={0}
                 categories={categories}
                 activeCategory={activeCategory}
                 onCategoryChange={setActiveCategory}

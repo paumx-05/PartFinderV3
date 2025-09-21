@@ -12,14 +12,16 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useNotes } from '@/lib/contexts/NotesContext';
+import { useAuth } from '@/hooks/use-auth';
 import { NotesDropdownProps } from '@/lib/types/notes';
 
 export function NotesDropdown({ onAbrirNuevaNota, onAbrirGestionNotas }: NotesDropdownProps) {
   const { getPendingNotesCount, getRecentNotes } = useNotes();
+  const { isAuthenticated } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   
-  const pendingCount = getPendingNotesCount();
-  const recentNotes = getRecentNotes(3);
+  const pendingCount = isAuthenticated ? getPendingNotesCount() : 0;
+  const recentNotes = isAuthenticated ? getRecentNotes(3) : [];
 
   const getPriorityColor = (priority: 'baja' | 'media' | 'alta') => {
     switch (priority) {

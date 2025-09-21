@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { FileText, ChevronDown, Clock, Plus } from 'lucide-react';
 import { usePresupuestos } from '@/lib/contexts/PresupuestosContext';
 import { useBudget } from '@/lib/contexts/BudgetContext';
+import { useAuth } from '@/hooks/use-auth';
 
 interface PresupuestosDropdownProps {
   onAbrirGestion: () => void;
@@ -13,10 +14,11 @@ interface PresupuestosDropdownProps {
 export function PresupuestosDropdown({ onAbrirGestion, onAbrirNuevoPresupuesto }: PresupuestosDropdownProps) {
   const { obtenerPresupuestosRecientes } = usePresupuestos();
   const { state: budgetState, setBudgetOpen } = useBudget();
+  const { isAuthenticated } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const presupuestosRecientes = obtenerPresupuestosRecientes(5);
+  const presupuestosRecientes = isAuthenticated ? obtenerPresupuestosRecientes(5) : [];
   const presupuestosCount = presupuestosRecientes.length;
 
   // Cerrar dropdown al hacer click fuera
@@ -69,17 +71,17 @@ export function PresupuestosDropdown({ onAbrirGestion, onAbrirNuevoPresupuesto }
         className="relative flex items-center space-x-1 hover:text-red-200 transition-colors p-1"
         aria-label="Presupuestos"
       >
-        <FileText className={`h-5 w-5 ${budgetState.budget ? 'text-green-400' : ''}`} />
+        <FileText className={`h-5 w-5 ${budgetState.budget && isAuthenticated ? 'text-green-400' : ''}`} />
         
         {/* Indicador de presupuesto activo */}
-        {budgetState.budget && (
+        {budgetState.budget && isAuthenticated && (
           <span className="absolute -top-1 -right-1 bg-green-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center font-bold animate-pulse">
             ●
           </span>
         )}
         
         {/* Contador de presupuestos guardados */}
-        {!budgetState.budget && presupuestosCount > 0 && (
+        {!budgetState.budget && presupuestosCount > 0 && isAuthenticated && (
           <span className="absolute -top-1 -right-1 bg-white text-red-600 text-xs rounded-full h-4 w-4 flex items-center justify-center font-bold">
             {presupuestosCount}
           </span>
@@ -105,7 +107,7 @@ export function PresupuestosDropdown({ onAbrirGestion, onAbrirNuevoPresupuesto }
           </div>
 
           {/* Presupuesto activo */}
-          {budgetState.budget && (
+          {budgetState.budget && isAuthenticated && (
             <div className="p-3 border-b border-gray-700 bg-green-900/20">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">

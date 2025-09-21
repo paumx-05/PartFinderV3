@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Wrench, User, LogOut, Phone, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useSessionMock } from '@/hooks/use-session-mock';
+import { useAuth } from '@/hooks/use-auth';
 import { authMock } from '@/lib/mocks/auth';
 import { useBudget } from '@/lib/contexts/BudgetContext';
 import { useNotes } from '@/lib/contexts/NotesContext';
@@ -23,7 +23,7 @@ interface HeaderProps {}
 
 export default function Header({}: HeaderProps) {
   const router = useRouter();
-  const { user, isAuthenticated, logout } = useSessionMock();
+  const { user, isAuthenticated, logout } = useAuth();
   const { state: budgetState, setBudgetOpen, initializeBudget } = useBudget();
   const [isGestionPresupuestosOpen, setIsGestionPresupuestosOpen] = useState(false);
   const [isGestionClientesOpen, setIsGestionClientesOpen] = useState(false);
@@ -47,10 +47,18 @@ export default function Header({}: HeaderProps) {
   };
 
   const handleAbrirGestionPresupuestos = () => {
+    if (!isAuthenticated) {
+      router.push('/login');
+      return;
+    }
     setIsGestionPresupuestosOpen(true);
   };
 
   const handleAbrirNuevoPresupuesto = () => {
+    if (!isAuthenticated) {
+      router.push('/login');
+      return;
+    }
     // Crear un presupuesto nuevo
     initializeBudget();
     // Abrir el BudgetModal
@@ -58,18 +66,34 @@ export default function Header({}: HeaderProps) {
   };
 
   const handleAbrirGestionClientes = () => {
+    if (!isAuthenticated) {
+      router.push('/login');
+      return;
+    }
     setIsGestionClientesOpen(true);
   };
 
   const handleAbrirNuevoCliente = () => {
+    if (!isAuthenticated) {
+      router.push('/login');
+      return;
+    }
     setIsNuevoClienteOpen(true);
   };
 
   const handleAbrirNuevaNota = () => {
+    if (!isAuthenticated) {
+      router.push('/login');
+      return;
+    }
     setIsNuevaNotaOpen(true);
   };
 
   const handleAbrirGestionNotas = () => {
+    if (!isAuthenticated) {
+      router.push('/login');
+      return;
+    }
     setIsGestionNotasOpen(true);
   };
 
@@ -87,15 +111,19 @@ export default function Header({}: HeaderProps) {
           </button>
 
           <div className="flex lg:hidden items-center gap-1 sm:gap-2">
-            <PresupuestosDropdown 
-              onAbrirGestion={handleAbrirGestionPresupuestos}
-              onAbrirNuevoPresupuesto={handleAbrirNuevoPresupuesto}
-            />
+            {isAuthenticated && (
+              <>
+                <PresupuestosDropdown 
+                  onAbrirGestion={handleAbrirGestionPresupuestos}
+                  onAbrirNuevoPresupuesto={handleAbrirNuevoPresupuesto}
+                />
 
-            <NotesDropdown 
-              onAbrirNuevaNota={handleAbrirNuevaNota}
-              onAbrirGestionNotas={handleAbrirGestionNotas}
-            />
+                <NotesDropdown 
+                  onAbrirNuevaNota={handleAbrirNuevaNota}
+                  onAbrirGestionNotas={handleAbrirGestionNotas}
+                />
+              </>
+            )}
 
             <button onClick={handleUserClick} className="flex items-center hover:text-red-200 transition-colors p-1" aria-label={isAuthenticated ? 'Mi cuenta' : 'Login'}>
               <User className="h-5 w-5 sm:h-6 sm:w-6" />
@@ -137,20 +165,24 @@ export default function Header({}: HeaderProps) {
               </div>
             </div>
 
-            <ClientesDropdown 
-              onAbrirGestion={handleAbrirGestionClientes}
-              onAbrirNuevoCliente={handleAbrirNuevoCliente}
-            />
+            {isAuthenticated && (
+              <>
+                <ClientesDropdown 
+                  onAbrirGestion={handleAbrirGestionClientes}
+                  onAbrirNuevoCliente={handleAbrirNuevoCliente}
+                />
 
-            <PresupuestosDropdown 
-              onAbrirGestion={handleAbrirGestionPresupuestos}
-              onAbrirNuevoPresupuesto={handleAbrirNuevoPresupuesto}
-            />
+                <PresupuestosDropdown 
+                  onAbrirGestion={handleAbrirGestionPresupuestos}
+                  onAbrirNuevoPresupuesto={handleAbrirNuevoPresupuesto}
+                />
 
-            <NotesDropdown 
-              onAbrirNuevaNota={handleAbrirNuevaNota}
-              onAbrirGestionNotas={handleAbrirGestionNotas}
-            />
+                <NotesDropdown 
+                  onAbrirNuevaNota={handleAbrirNuevaNota}
+                  onAbrirGestionNotas={handleAbrirGestionNotas}
+                />
+              </>
+            )}
 
             <button onClick={handleUserClick} className="flex items-center space-x-1 hover:text-red-200 transition-colors p-1" aria-label={isAuthenticated ? 'Mi cuenta' : 'Login'}>
               <User className="h-5 w-5" />
